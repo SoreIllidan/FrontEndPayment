@@ -1,0 +1,124 @@
+
+    <!-- Tasks Page TAREA -->
+    <div class="page-content d-none" id="tasks-page">
+        <div class="content-header">
+          <h1 class="page-title">Tareas</h1>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <i class='bx bx-plus'></i> Nueva tarea
+          </button>
+        </div>
+  
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <select class="form-select">
+                  <option selected>Estado</option>
+                  <option>Pendiente</option>
+                  <option>En progreso</option>
+                  <option>Completado</option>
+                  <option>Cancelado</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <select class="form-select">
+                  <option selected>Asignado a</option>
+                  <option>Ana Gómez</option>
+                  <option>Carlos Ruiz</option>
+                  <option>Laura Torres</option>
+                  <option>Miguel Sánchez</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <input type="date" class="form-control" placeholder="Fecha límite">
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Buscar tarea...">
+                  <button class="btn btn-outline-secondary" type="button">
+                    <i class='bx bx-search'></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="table-container">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Asignado a</th>
+                <th>Fecha límite</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Diseño de interfaz</td>
+                <td>Crear mockups de la aplicación</td>
+                <td>Ana Gómez</td>
+                <td>20/05/2025</td>
+                <td><span class="badge bg-danger">Alta</span></td>
+                <td><span class="badge bg-warning">En progreso</span></td>
+                <td>
+                  <button class="btn btn-action"><i class='bx bx-edit'></i></button>
+                  <button class="btn btn-action"><i class='bx bx-check'></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Desarrollo API</td>
+                <td>Implementar endpoints para usuarios</td>
+                <td>Carlos Ruiz</td>
+                <td>25/05/2025</td>
+                <td><span class="badge bg-warning">Media</span></td>
+                <td><span class="badge bg-success">Completado</span></td>
+                <td>
+                  <button class="btn btn-action"><i class='bx bx-edit'></i></button>
+                  <button class="btn btn-action"><i class='bx bx-check'></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Pruebas de usabilidad</td>
+                <td>Realizar pruebas con usuarios finales</td>
+                <td>Laura Torres</td>
+                <td>28/05/2025</td>
+                <td><span class="badge bg-info">Baja</span></td>
+                <td><span class="badge bg-danger">Pendiente</span></td>
+                <td>
+                  <button class="btn btn-action"><i class='bx bx-edit'></i></button>
+                  <button class="btn btn-action"><i class='bx bx-check'></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Despliegue en servidor</td>
+                <td>Configurar servidor y desplegar aplicación</td>
+                <td>Miguel Sánchez</td>
+                <td>01/06/2025</td>
+                <td><span class="badge bg-danger">Alta</span></td>
+                <td><span class="badge bg-danger">Pendiente</span></td>
+                <td>
+                  <button class="btn btn-action"><i class='bx bx-edit'></i></button>
+                  <button class="btn btn-action"><i class='bx bx-check'></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Documentación técnica</td>
+                <td>Redactar documentación del proyecto</td>
+                <td>Ana Gómez</td>
+                <td>05/06/2025</td>
+                <td><span class="badge bg-warning">Media</span></td>
+                <td><span class="badge bg-danger">Pendiente</span></td>
+                <td>
+                  <button class="btn btn-action"><i class='bx bx-edit'></i></button>
+                  <button class="btn btn-action"><i class='bx bx-check'></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
