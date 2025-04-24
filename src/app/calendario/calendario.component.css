@@ -411,3 +411,9 @@
       display: flex;
     }
   }
+  #calendar {
+    max-width: 800px;  /* Ajusta según lo que necesites */
+    margin: 0 auto;    /* Centra horizontalmente */
+    font-size: 0.9rem; /* Reduce un poco el tamaño del texto */
+  }
+  

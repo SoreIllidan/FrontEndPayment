@@ -116,10 +116,11 @@
   /* Cards */
   .card {
     background-color: var(--white);
+    border: 1px solid var(--bs-gray-300);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     transition: var(--transition);
-    border: none;
+    /*border: none;*/
     margin-bottom: 20px;
   }
   
@@ -138,7 +139,7 @@
   }
   
   .dashboard-card .card-body {
-    padding: 20px;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
   }
   
   .dashboard-card.teal {
