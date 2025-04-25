@@ -1,12 +1,59 @@
- <!-- Calendar Page -->
- <div class="page-content" id="calendar-page">
-    <div class="content-header">
-      <h1 class="page-title">Calendario</h1>
+<!-- Calendar Page -->
+<div class="page-content" id="calendar-page">
+  <div class="content-header">
+    <h1 class="page-title">Calendario</h1>
+    <button class="btn btn-primary" (click)="openNewEventModal()">
+      <i class="bi bi-plus-circle"></i> Nuevo Evento
+    </button>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <div id="calendar"></div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <div id="calendar"></div>
+  </div>
+</div>
+
+<!-- Event Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{selectedEvent ? 'Editar Evento' : 'Nuevo Evento'}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="handleEvent()">
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input type="text" class="form-control" [(ngModel)]="eventTitle" name="title" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Prioridad</label>
+            <select class="form-select" [(ngModel)]="eventPriority" name="priority">
+              <option value="alta">Alta</option>
+              <option value="media">Media</option>
+              <option value="baja">Baja</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Fecha</label>
+            <input type="date" class="form-control" [(ngModel)]="eventDate" name="date" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="eventDescription" name="description"></textarea>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">{{selectedEvent ? 'Actualizar' : 'Guardar'}}</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-
+</div>
