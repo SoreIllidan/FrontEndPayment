@@ -6,10 +6,10 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 import { ReporteComponent } from './reporte/reporte.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { CalendarioComponent } from './calendario/calendario.component';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
+  
+  {path: '', component:DashboardComponent},
   {path: 'dashboard', component:DashboardComponent},
   {path: 'tareas', component:TareaComponent},
   {path: 'calendario', component:CalendarioComponent},
