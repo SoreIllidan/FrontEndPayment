@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { TareaComponent } from './tarea/tarea.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TareaComponent } from './components/tarea/tarea.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 import { ReporteComponent } from './components/reporte/reporte.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';

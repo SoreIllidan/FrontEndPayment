@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { VistaActividad } from '../models/VistaActividad';
-import { TareaService } from '../services/tarea.service';
-import { UsuarioService } from '../services/usuario.service';
-import { Usuario } from '../models/Usuario';
+import { Usuario } from 'src/app/models/Usuario';
+import { VistaActividad } from 'src/app/models/VistaActividad';
+import { TareaService } from 'src/app/services/tarea.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+
 
 @Component({
   selector: 'app-tarea',

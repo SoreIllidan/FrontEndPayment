@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { VistaActividad } from '../models/VistaActividad';
-import { TareaService } from '../services/tarea.service';
+import { VistaActividad } from 'src/app/models/VistaActividad';
+import { TareaService } from 'src/app/services/tarea.service';
+
 
 @Component({
   selector: 'app-dashboard',
