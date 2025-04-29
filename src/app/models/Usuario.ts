@@ -5,8 +5,8 @@ export interface Usuario {
     direccion: string;
     correo_electronico: string;
     telefono: string;
-    fecha_contrato?: Date | null;
+    fecha_contrato?: Date;
     cargo: string;
     id_area: number;
-    estado?: boolean | null;
+    estado?: boolean;
 }

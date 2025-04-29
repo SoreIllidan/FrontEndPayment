@@ -5,10 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TareaComponent } from './tarea/tarea.component';
-import { ProyectosComponent } from './proyectos/proyectos.component';
-import { ReporteComponent } from './reporte/reporte.component';
-import { NotificacionesComponent } from './notificaciones/notificaciones.component';
-import { CalendarioComponent } from './calendario/calendario.component';
+import { ProyectosComponent } from './components/proyectos/proyectos.component';
+import { ReporteComponent } from './components/reporte/reporte.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 

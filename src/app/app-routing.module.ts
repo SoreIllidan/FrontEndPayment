@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TareaComponent } from './tarea/tarea.component';
-import { NotificacionesComponent } from './notificaciones/notificaciones.component';
-import { ReporteComponent } from './reporte/reporte.component';
-import { ProyectosComponent } from './proyectos/proyectos.component';
-import { CalendarioComponent } from './calendario/calendario.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
+import { ReporteComponent } from './components/reporte/reporte.component';
+import { ProyectosComponent } from './components/proyectos/proyectos.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 
 const routes: Routes = [
   
