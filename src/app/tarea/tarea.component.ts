@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { VistaActividad } from '../models/VistaActividad';
 import { TareaService } from '../services/tarea.service';
+import { UsuarioService } from '../services/usuario.service';
+import { Usuario } from '../models/Usuario';
 
 @Component({
   selector: 'app-tarea',
@@ -10,30 +12,36 @@ import { TareaService } from '../services/tarea.service';
 export class TareaComponent implements OnInit {
 
   data: VistaActividad[]=[];
+  dataUsuario: Usuario[]=[];
   displayedColumns: string[] = ['titulo', 'descripcion', 'nombre', 'fecha_fin', 'estado'];
 
-  constructor(private servicio: TareaService) { }
+  constructor(private servicio: TareaService, private servicioUsuario: UsuarioService) { }
 
   ngOnInit(): void {
     this.getAll();
+    this.getAllUsuario();
   }
 
   getAll(){
     this.servicio.getAll().subscribe(x => this.data = x);
   }
 
+  getAllUsuario(){
+    this.servicioUsuario.getAll().subscribe(x => this.dataUsuario = x);
+  }
+
   getEstadoColor(estado: string): string {
     switch (estado) {
-      case 'Progreso':
-        return 'bg-warning text-dark';     // Amarillo pálido
-      case 'Completada':
-        return 'bg-success text-dark';     // Verde pálido
-      case 'Programada':
-        return 'bg-info text-dark';        // Celeste pálido
+      case 'En progreso':
+        return 'bg-warning text-dark';    
+      case 'Completado':
+        return 'bg-success text-dark';    
+      case 'Pendiente':
+        return 'bg-info text-dark';        
       case 'Cancelado':
-        return 'bg-secondary text-dark';   // Gris claro
+        return 'bg-danger text-dark';   
       default:
-        return 'bg-light text-dark';              // Fondo casi blanco
+        return 'bg-light text-dark';             
     }
   }
   

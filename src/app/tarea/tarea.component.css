@@ -415,3 +415,11 @@ body {
     display: flex;
   }
 }
+
+
+.badge-background {
+  background-color: #dc3545; /* Color de fondo, puedes cambiarlo por el color que desees */
+  width: 150px;  /* Ancho fijo */
+  text-align: center;  /* Centra el texto dentro del fondo */
+  display: inline-block; /* Asegura que el fondo se ajuste al contenido */
+}

@@ -21,12 +21,9 @@
                 </select>
               </div>
               <div class="col-md-3 mb-3">
-                <select class="form-select">
+                <select class="form-select ">
                   <option selected>Asignado a</option>
-                  <option>Ana Gómez</option>
-                  <option>Carlos Ruiz</option>
-                  <option>Laura Torres</option>
-                  <option>Miguel Sánchez</option>
+                  <option *ngFor="let data of dataUsuario; let i = index">{{ data.nombre }}</option>
                 </select>
               </div>
               <div class="col-md-3 mb-3">
@@ -61,15 +58,14 @@
               <tr *ngFor="let data of data; let i = index">
                 <td>{{data.titulo}}</td>
                 <td>{{data.descripcion}}</td>
-                <td>{{data.nombre}}</td>
-                <td>{{data.fecha_fin}}</td>
+                <td>{{data.nombre + " " + data.apellido}}</td>
+                <td>{{ data.fecha_fin | date: 'yyyy-MM-dd' }}</td>
                 <td><span class="badge bg-danger">Alta</span></td>
                 <td>
-                  <span class="badge text-white px-3 py-2 fs-6" [ngClass]="getEstadoColor(data.estado)">
+                  <span class="badge text-white px-3 py-2 fs-6 badge-background" [ngClass]="getEstadoColor(data.estado)">
                     {{data.estado}}
                   </span>
-                </td>
-                
+                </td>               
                          
                 <td>
                   <button class="btn btn-action"><i class='bx bx-edit'></i></button>
