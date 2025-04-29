@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: '', component:DashboardComponent},
   {path: 'dashboard', component:DashboardComponent},
   {path: 'tareas', component:TareaComponent},
-  {path: 'calendario', component:CalendarioComponent},
+  {path: 'Calendario', component:CalendarioComponent},
   {path: 'proyectos', component:ProyectosComponent},
   {path: 'reportes', component:ReporteComponent},
   {path: 'notificaciones', component:NotificacionesComponent}
