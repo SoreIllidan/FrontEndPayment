@@ -1,8 +1,9 @@
 <!-- Calendar Page -->
 <div class="page-content" id="calendar-page">
   <div class="content-header">
-    <h1 class="page-title">Calendario</h1>
-    <button class="btn btn-primary" (click)="openNewEventModal()">
+    <h1 class="page-title">Calendarios</h1>
+    <button class="btn btn-primary new-event-btn" 
+      (click)="openNewEventModal()">
       <i class="bi bi-plus-circle"></i> Nuevo Evento
     </button>
   </div>
@@ -18,20 +19,20 @@
 <div class="modal fade" id="eventModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ selectedEvent ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
+      <div class="modal-header custom-modal-header my-custom-header text-white">
+        <h5 class="modal-title fw-bold header-title">{{ selectedEvent ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form (ngSubmit)="handleEvent()">
           <!-- Campos del formulario -->
           <div class="mb-3">
-            <label class="form-label">Título</label>
+            <label class="form-label fw-bold">Título</label>
             <input type="text" class="form-control" [(ngModel)]="eventTitle" name="title" required>
           </div>
           
           <div class="mb-3">
-            <label class="form-label">Prioridad</label>
+            <label class="form-label fw-bold">Prioridad</label>
             <select class="form-select" [(ngModel)]="eventPriority" name="priority">
               <option value="alta">Alta</option>
               <option value="media">Media</option>
@@ -40,12 +41,12 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Fecha</label>
+            <label class="form-label fw-bold">Fecha</label>
             <input type="date" class="form-control" [(ngModel)]="eventDate" name="date" required>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Descripción</label>
+            <label class="form-label fw-bold">Descripción</label>
             <textarea class="form-control" [(ngModel)]="eventDescription" name="description"></textarea>
           </div>
 
@@ -55,7 +56,7 @@
             <button *ngIf="selectedEvent" type="button" class="btn btn-danger" (click)="handleDeleteEvent()">
               Eliminar
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-success">
               {{ selectedEvent ? 'Actualizar' : 'Guardar' }}
             </button>
           </div>
@@ -65,7 +66,7 @@
   </div>
 </div>
 
-<!-- Modal Confirmación Eliminación (NUEVO) -->
+<!-- Modal Confirmación Eliminación -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

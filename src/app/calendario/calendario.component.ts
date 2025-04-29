@@ -50,7 +50,11 @@ export class CalendarioComponent implements OnInit {
       plugins: [dayGridPlugin, interactionPlugin, bootstrap5Plugin], // Plugins requeridos
       themeSystem: 'bootstrap5',     // Usa el tema de Bootstrap 5
       initialView: 'dayGridMonth',   // Vista inicial: mes
-      locale: 'es',                  // Idioma español
+      locale: 'es',   //Idioma español 
+      titleFormat: { 
+        year: 'numeric', 
+        month: 'long' 
+      },
       timeZone: 'America/Lima',      // Zona horaria de Perú
       firstDay: 1,                   // La semana empieza en lunes
       

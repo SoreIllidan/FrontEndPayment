@@ -60,3 +60,37 @@ body .fc button {
     margin: 0 3px;
   }
 }
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.new-event-btn {
+  background-color: #08c0bc !important;
+  border-color: #08c0bc !important;
+}
+
+.new-event-btn:hover {
+  background-color: #06a8a5 !important;
+  border-color: #06a8a5 !important;
+}
+
+#eventModal .btn-success {
+  background-color: #08c0bc; 
+  border-color: #08c0bc;
+}
+
+/* Color del botón de cierre (X) */
+.custom-modal-header .btn-close {
+  filter: invert(1);  /* Convierte el icono a blanco */
+}
+
+.my-custom-header {
+  background-color: #9367d9; /* Header modal crear nuevo evento */
+}
+
+.header-title {
+  font-size: 1.1rem; /* Tamaño del texto del header */
+}
