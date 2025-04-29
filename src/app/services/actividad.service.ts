@@ -15,4 +15,5 @@ export class ActividadService {
    getAll():Observable<Actividad[]>{
      return this.http.get<Actividad[]>(this.url);
    }
+   
  }

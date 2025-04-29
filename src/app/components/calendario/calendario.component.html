@@ -1,12 +1,90 @@
- <!-- Calendar Page -->
- <div class="page-content" id="calendar-page">
-    <div class="content-header">
-      <h1 class="page-title">Calendario</h1>
+<!-- Calendar Page -->
+<div class="page-content" id="calendar-page">
+  <div class="content-header">
+    <h1 class="page-title">Calendarios</h1>
+    <button class="btn btn-primary new-event-btn" 
+    data-toggle="modal" data-target="#eventModal">
+      <i class="bi bi-plus-circle"></i> Nuevo Evento
+    </button>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <div id="calendar"></div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <div id="calendar"></div>
+  </div>
+</div>
+
+<!-- Modal Edición/Creación Evento -->
+<div class="modal fade" id="eventModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header custom-modal-header my-custom-header text-white">
+        <h5 class="modal-title fw-bold header-title">{{ selectedEvent ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="handleEvent()">
+          <!-- Campos del formulario -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Título</label>
+            <input type="text" class="form-control" [(ngModel)]="eventTitle" name="title" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Prioridad</label>
+            <select class="form-select" [(ngModel)]="eventPriority" name="priority">
+              <option value="alta">Alta</option>
+              <option value="media">Media</option>
+              <option value="baja">Baja</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Fecha</label>
+            <input type="date" class="form-control" [(ngModel)]="eventDate" name="date" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="eventDescription" name="description"></textarea>
+          </div>
+
+          <!-- Botones -->
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button *ngIf="selectedEvent" type="button" class="btn btn-danger" (click)="handleDeleteEvent()">
+              Eliminar
+            </button>
+            <button type="submit" class="btn btn-success">
+              {{ selectedEvent ? 'Actualizar' : 'Guardar' }}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
+<!-- Modal Confirmación Eliminación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de eliminar permanentemente este evento?
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+                class="btn btn-secondary" 
+                data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" 
+                class="btn btn-danger" 
+                (click)="confirmDelete()">Sí, Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
