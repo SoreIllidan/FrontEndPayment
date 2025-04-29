@@ -1,54 +1,62 @@
-/* Prioridades de eventos */
-.fc-event-priority-alta {
-  background-color: #dc3545 !important;
-  border-color: #dc3545 !important;
+/* ---------- SOBRESCRITURA TOTAL DE BOTONES ---------- */
+body .fc .fc-toolbar.fc-header-toolbar .fc-button-group button,
+body .fc .fc-toolbar.fc-header-toolbar .fc-today-button {
+  background-color: #9366d9 !important;
+  border-color: #9366d9 !important;
+  color: white !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.fc-event-priority-media {
-  background-color: #ffc107 !important;
-  border-color: #ffc107 !important;
-  color: #000 !important;
+/* Efecto hover con pseudo-elemento */
+body .fc button:hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.15);
 }
 
-.fc-event-priority-baja {
-  background-color: #28a745 !important;
-  border-color: #28a745 !important;
+/* Estados activos y seleccionados */
+body .fc .fc-button-active,
+body .fc .fc-button:active {
+  background-color: #6a30b5 !important;
+  border-color: #6a30b5 !important;
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(106,48,181,0.3) !important;
 }
 
-/* Mejoras visuales */
-#calendar {
-  background: var(--white);
-  border-radius: var(--border-radius);
-  padding: 20px;
-  box-shadow: var(--box-shadow);
+/* Iconos dentro de botones */
+body .fc button .fc-icon {
+  color: white !important;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
 }
 
-.fc-toolbar {
-  padding: 15px;
-  background-color: var(--light);
-  border-radius: var(--border-radius);
-  margin-bottom: 20px !important;
+/* Fuerza colores en estilos inline */
+body .fc button[style*="background-color"] {
+  background-color: #9366d9 !important;
+  border-color: #9366d9 !important;
 }
 
-.fc-event {
-  font-size: 0.85em;
-  padding: 3px 6px;
-  margin: 2px 0;
-  transition: var(--transition);
+/* Deshabilita transiciones iniciales */
+body .fc button {
+  transition: none !important;
 }
 
-.fc-event:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow);
+/* ---------- IMPLEMENTACIÓN OBLIGATORIA ---------- */
+/* Añade esto al final de tu archivo CSS */
+@layer overrides {
+  body .fc button {
+    all: unset;
+    background-color: #9366d9 !important;
+    border-color: #9366d9 !important;
+    color: white !important;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 3px;
+  }
 }
-
-.modal-content {
-  border-radius: var(--border-radius);
-  border: none;
-}
-
-.form-control:focus, .form-select:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 0.25rem rgba(123, 104, 238, 0.25);
-}
-
