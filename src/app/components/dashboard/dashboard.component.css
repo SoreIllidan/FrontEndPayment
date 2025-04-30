@@ -3,8 +3,9 @@
     --secondary: #40E0D0;
     --light: #f8f9fa;
     --dark: #343a40;
+    --red: #900;
     --white: #ffffff;
-    --border-radius: 10px;
+    --border-radius: 50px;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
   }
