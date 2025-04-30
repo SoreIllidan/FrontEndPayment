@@ -5,6 +5,6 @@ export class Actividad {
     descripcion: string = '';  
     fecha_inicio: string = '';  
     fecha_fin: string = ''; 
-    estado: string = 'Pendiente'; 
+    estado: string = ''; 
   }
   

@@ -22,12 +22,12 @@ export class ActividadService {
       return this.http.get<Actividad[]>(this.url);
     }
 
-    saveActividad(producto: Actividad): Observable<Object>{
-      return this.http.post(this.urlActividad, producto);
+    saveActividad(actividad: Actividad): Observable<Object>{
+      return this.http.post(this.urlActividad, actividad);
     }
 
-    updateActividad(id:number, producto: Actividad ): Observable<Object>{
-      return this.http.put(`${this.urlActividad}/${id}`, producto);
+    updateActividad(actividad: Actividad): Observable<Actividad>{
+      return this.http.put<Actividad>(`${this.urlActividad}/${actividad.id_actividad}`, actividad);
     }
 
     deleteActividad(id: number): Observable<Object>{

@@ -6,6 +6,9 @@ import { VistaActividad } from 'src/app/models/VistaActividad';
 import { ActividadService } from 'src/app/services/actividad.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
+import * as bootstrap from 'bootstrap';
+
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -52,10 +55,26 @@ export class ActividadComponent implements OnInit {
 
   poblarModal(actividad: Actividad): void {
     this.newActividad = { ...actividad }; 
+    // console.log('Actividad cargada:', this.newActividad);
   }  
 
   onSubmit() {
     this.saveActividad();
+  }
+
+  getEstadoColor(estado: string): string {
+    switch (estado) {
+      case 'En progreso':
+        return 'bg-warning text-dark';    
+      case 'Completado':
+        return 'bg-success text-dark';    
+      case 'Pendiente':
+        return 'bg-info text-dark';        
+      case 'Cancelado':
+        return 'bg-danger text-dark';   
+      default:
+        return 'bg-light text-dark';             
+    }
   }
 
   formatDate(date: Date): string {
@@ -110,19 +129,53 @@ export class ActividadComponent implements OnInit {
     });
   }
 
-  getEstadoColor(estado: string): string {
-    switch (estado) {
-      case 'En progreso':
-        return 'bg-warning text-dark';    
-      case 'Completado':
-        return 'bg-success text-dark';    
-      case 'Pendiente':
-        return 'bg-info text-dark';        
-      case 'Cancelado':
-        return 'bg-danger text-dark';   
-      default:
-        return 'bg-light text-dark';             
+  updateActividad() {
+    if (this.newActividad.id_actividad == null) {
+      console.error('ID de la actividad es null. No se puede actualizar.');
+      return;
     }
+  
+    this.servicio.updateActividad( this.newActividad).subscribe({
+      next: (response: Actividad) => {
+        console.log('Actividad actualizada', response);
+        this.getAll();
+        this.resetForm();
+  
+        this.actividades = this.actividades.map(actividad => 
+          actividad.id_actividad === response.id_actividad ? response : actividad
+        );
+  
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Se actualizó correctamente la actividad",
+          showConfirmButton: true,
+          showCloseButton: true,
+          timer: 3000
+        });
+  
+        this.resetForm();
+      },
+      error: (err) => {
+        console.log('Error al actualizar', err);
+        if (err.error && err.error.errors) {
+          // Mostrar errores de validación específicos
+          console.log('Errores de validación:', err.error.errors);
+        }
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Algo pasó",
+          text: "No se logró actualizar la actividad, vuelva a intentar",
+          showConfirmButton: true,
+          showCloseButton: true,
+          timer: 3000
+        });
+      }      
+    });
   }
+  
+
+  
   
 }

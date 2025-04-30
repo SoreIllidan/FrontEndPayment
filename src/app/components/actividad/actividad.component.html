@@ -70,7 +70,8 @@
             <td>
               <button 
                 class="btn btn-action" 
-                data-bs-toggle="modal" 
+                data-bs-toggle="modal"
+                (click)="poblarModal(data)" 
                 data-bs-target="#updateModal">
                 <i class='bx bx-edit'></i>
               </button>
@@ -164,7 +165,7 @@
                         </div>
                         <div class="modal-body">
                           
-                          <form (ngSubmit)="saveActividad()" #formActividad="ngForm">
+                          <form (ngSubmit)="updateActividad()" #formActividad="ngForm">
                             <!-- Título -->
                             <div class="mb-3">
                               <label for="titulo" class="form-label">Título</label>
@@ -219,19 +220,17 @@
                                   name="estado" 
                                   [(ngModel)]="newActividad.estado">
                                   <option value="En progreso">En progreso</option>
-                                  <option value="Completada">Completada</option>
+                                  <option value="Completado">Completado</option>
                                   <option value="Cancelado">Cancelado</option>
                                 </select>
                               </div>
 
                             </div>
 
-
-                          
                             <!-- Botón -->
                             <div class="modal-footer">
                               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="submit" class="btn btn-turquoise">Guardar</button>
+                              <button type="submit" class="btn btn-turquoise" >Actualizar</button>
                             </div>
                           </form>
                         
