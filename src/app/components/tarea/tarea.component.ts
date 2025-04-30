@@ -23,6 +23,8 @@ export class TareaComponent implements OnInit {
     this.getAllUsuario();
   }
 
+
+
   getAll(){
     this.servicio.getAll().subscribe(x => this.data = x);
   }

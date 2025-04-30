@@ -1,4 +1,8 @@
-:root {
+table {
+    width: 100%;
+  }
+  
+  :root {
     --primary: #7B68EE;
     --secondary: #40E0D0;
     --light: #f8f9fa;
@@ -16,7 +20,7 @@
     transition: var(--transition);
     overflow-x: hidden;
   }
-
+  
   /* Sidebar */
   .sidebar {
     background-color: var(--white);
@@ -377,7 +381,6 @@
     
     .logo-text, .menu-label {
       display: none;
-      font-weight: bold;
     }
     
     .main-content {
@@ -411,4 +414,36 @@
     .mobile-nav {
       display: flex;
     }
+  }
+  
+  
+  .badge-background {
+    background-color: #dc3545; /* Color de fondo, puedes cambiarlo por el color que desees */
+    width: 150px;  /* Ancho fijo */
+    text-align: center;  /* Centra el texto dentro del fondo */
+    display: inline-block; /* Asegura que el fondo se ajuste al contenido */
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .btn-turquoise {
+    background-color: #40E0D0;
+    color: white;
+  }
+  
+  .btn-turquoise:hover {
+    background-color: #30cfc0;
+  }
+  
+  .modal-header {
+    background-color: #0d6efd; /* Azul Bootstrap */
+    color: white;
+  }
+  
+  .modal-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
   }

@@ -6,13 +6,14 @@ import { NotificacionesComponent } from './components/notificaciones/notificacio
 import { ReporteComponent } from './components/reporte/reporte.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
+import { ActividadComponent } from './components/actividad/actividad.component';
 
 const routes: Routes = [
   
   {path: '', component:DashboardComponent},
   {path: 'dashboard', component:DashboardComponent},
-  {path: 'tareas', component:TareaComponent},
-  {path: 'calendario', component:CalendarioComponent},
+  {path: 'tareas', component:ActividadComponent},
+  {path: 'Calendario', component:CalendarioComponent},
   {path: 'proyectos', component:ProyectosComponent},
   {path: 'reportes', component:ReporteComponent},
   {path: 'notificaciones', component:NotificacionesComponent}

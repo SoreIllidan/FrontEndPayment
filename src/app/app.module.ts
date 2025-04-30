@@ -1,7 +1,7 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { TareaComponent } from './components/tarea/tarea.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ActividadComponent } from './components/actividad/actividad.component';
 
 
 
@@ -37,11 +38,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ReporteComponent,
     NotificacionesComponent,
     CalendarioComponent,
-    DashboardComponent
+    DashboardComponent,
+    ActividadComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     //PARA IMPORTAR COMPONENTES DE MATERIAL
