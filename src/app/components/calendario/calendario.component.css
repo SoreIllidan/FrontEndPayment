@@ -1,8 +1,8 @@
 /* ---------- SOBRESCRITURA TOTAL DE BOTONES ---------- */
 body .fc .fc-toolbar.fc-header-toolbar .fc-button-group button,
 body .fc .fc-toolbar.fc-header-toolbar .fc-today-button {
-  background-color: #9366d9 !important;
-  border-color: #9366d9 !important;
+  background-color: #a864ff !important;
+  border-color: #a864ff !important;
   color: white !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -68,18 +68,18 @@ body .fc button {
 }
 
 .new-event-btn {
-  background-color: #08c0bc !important;
-  border-color: #08c0bc !important;
+  background-color: #04bac0 !important;
+  border-color: #04bac0 !important;
 }
 
 .new-event-btn:hover {
-  background-color: #08c0bc !important;
-  border-color: #08c0bc !important;
+  background-color: #04bac0 !important;
+  border-color: #04bac0 !important;
 }
 
 #eventModal .btn-success {
-  background-color: #08c0bc; 
-  border-color: #08c0bc;
+  background-color: #04bac0; 
+  border-color: #04bac0;
 }
 
 /* Color del botón de cierre (X) */
@@ -143,13 +143,12 @@ body .fc button {
   transition: none !important;
 }
 
-/* ---------- IMPLEMENTACIÓN OBLIGATORIA ---------- */
-/* Añade esto al final de tu archivo CSS */
+/*Botones */
 @layer overrides {
   body .fc button {
     all: unset;
-    background-color: #9366d9 !important;
-    border-color: #9366d9 !important;
+    background-color: #04bac0!important;
+    border-color: #04bac0 !important;
     color: white !important;
     padding: 6px 12px;
     border-radius: 4px;
@@ -164,19 +163,20 @@ body .fc button {
   color: var(--dark);
 }
 
+/*Boton nuevo evento*/
 .new-event-btn {
-  background-color: #08c0bc !important;
-  border-color: #08c0bc !important;
+  background-color: #a765fe !important;
+  border-color: #a765fe !important;
 }
 
 .new-event-btn:hover {
-  background-color: #06a8a5 !important;
-  border-color: #06a8a5 !important;
+  background-color: #04bac0 !important;
+  border-color: #04bac0 !important;
 }
 
 #eventModal .btn-success {
-  background-color: #08c0bc; 
-  border-color: #08c0bc;
+  background-color: #04bac0; 
+  border-color: #04bac0;
 }
 
 /* Color del botón de cierre (X) */
