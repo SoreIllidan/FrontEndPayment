@@ -9,6 +9,7 @@ import { VistaActividad } from '../models/VistaActividad';
 })
 export class ActividadService {
 
+
   private url: string = 'http://localhost:5130/api/VistaActividadesUsuario';
   private urlActividad: string = 'http://localhost:5130/api/Actividad';
 
