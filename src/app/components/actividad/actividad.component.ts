@@ -56,6 +56,10 @@ export class ActividadComponent implements OnInit {
   poblarModal(actividad: Actividad): void {
     this.newActividad = { ...actividad }; 
     // console.log('Actividad cargada:', this.newActividad);
+    // Asegura que fecha_fin esté en formato YYYY-MM-DD
+    if (this.newActividad.fecha_fin) {
+      this.newActividad.fecha_fin = this.newActividad.fecha_fin.split('T')[0];
+    }
   }  
 
   onSubmit() {
