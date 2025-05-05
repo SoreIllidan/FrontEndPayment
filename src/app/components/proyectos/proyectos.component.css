@@ -1,9 +1,11 @@
 :root {
     --primary: #7B68EE;
     --secondary: #40E0D0;
+    --turquesa: #a965ff;
     --light: #f8f9fa;
     --dark: #343a40;
     --white: #ffffff;
+    --gris: #6c757d;
     --border-radius: 10px;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
@@ -412,3 +414,28 @@
       display: flex;
     }
   }
+
+  .btn-turquoise {
+    background-color: #a965ff; /* Color turquesa */
+    color: white; /* Color del texto */
+  }
+
+  .custom-card {
+    background-color: #e8e9ff; /* Color personalizado */
+    border: 1px solid #ccc; /* Opcional: agregar un borde */
+}
+.custom-progress {
+  background-color: #a965ff; /* Color personalizado para la barra de progreso */
+}
+
+.modal-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.0rem;
+  font-weight: bold;
+}

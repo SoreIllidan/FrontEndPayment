@@ -9,7 +9,7 @@
         <button class="btn btn-outline-secondary me-2">
           <i class='bx bx-grid-alt'></i>
         </button>
-        <button class="btn btn-turquoise" data-bs-toggle="modal" data-bs-target="#createModal">
+        <button class="btn btn-turquoise" data-bs-toggle="modal" data-bs-target="#createModal" (click)="resetForm()">
           <i class='bx bx-plus'></i> Nueva Proyecto
         </button>
         
@@ -18,39 +18,38 @@
 
 <div class="row">
      <!-- Iterar sobre la lista de proyectos -->
-      <div class="col-md-4" *ngFor="let p of proyecto">
-        <div class="card project-card">
-          <div class="card-body">
+      <div class="col-md-4" *ngFor="let data of proyecto">
+        <div class="card project-card custom-card">
+          <div class="card-body ">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <!-- Título del proyecto -->
-              <h5 class="card-title">{{ p.titulo }}</h5>
+              <h5 class="card-title">{{ data.titulo }}</h5>
               <!-- Estado del proyecto -->
-              <span class="badge" [ngClass]="{
-                'bg-success': p.estado === 'Activo',
-                'bg-warning': p.estado === 'En Progreso',
-                'bg-danger': p.estado === 'No Iniciado'
-              }">
-                {{ p.estado }}
+              <span class="badge" [ngClass]="getEstadoColor(data.estado)">
+                {{ data.estado }}
               </span>
             </div>
-            <!-- Descripción del proyecto -->
-            <p class="card-text text-muted">{{ p.descripcion }}</p>
+           <!-- Descripción del proyecto -->
+            <p class="card-text text-muted">
+              {{ data.descripcion.length > 90 ? (data.descripcion | slice:0:90) + '...' : data.descripcion }}
+            </p>
 
             <div class="mb-3">
               <div class="d-flex justify-content-between mb-1">
                 <span>Progreso</span>
-                <span>{{ p.progreso }}%</span>
+                <span>{{ data.progreso }}%</span>
               </div>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" [style.width]="p.progreso + '%'" [attr.aria-valuenow]="p.progreso" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar"role="progressbar" [style.width]="data.progreso + '%'" [attr.aria-valuenow]="data.progreso" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <small class="text-muted">Fecha límite: {{ p.fecha_limite | date: 'dd/MM/yyyy' }}</small>
+                <small class="text-muted">Fecha límite: {{ data.fecha_limite | date: 'dd/MM/yyyy' }}</small>
               </div>
-              <button class="btn btn-sm btn-outline-primary">Detalles</button>
+              <button class="btn btn-sm btn-outline-primary" (click)="poblarModal(data)" data-bs-toggle="modal" 
+              data-bs-target="#detalleProyectoModal">Detalles</button>
             </div>
           </div>
         </div>
@@ -58,81 +57,179 @@
 </div>
 
 
-                  <!-- Task Modal registrar -->
-                  <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="taskModalLabel">Nueva actividad</h5>
-                          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          
-                          <form  #formActividad="ngForm">
-                            
-                            <div class="mb-3">
-                              <label for="projectTitle" class="form-label">Título del proyecto</label>
-                              <input type="text" class="form-control" id="projectTitle" placeholder="Ej: Rediseño del sitio web" required>
-                            </div>
-                            <div class="mb-3">
-                              <label for="projectDescription" class="form-label">Descripción</label>
-                              <textarea class="form-control" id="projectDescription" rows="3" placeholder="Breve descripción del proyecto" required></textarea>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6 mb-3">
-                                <label for="projectDeadline" class="form-label">Fecha límite</label>
-                                <input type="date" class="form-control" id="projectDeadline" required>
-                              </div>
-                              <div class="col-md-6 mb-3">
-                                <label for="projectStatus" class="form-label">Estado</label>
-                                <select class="form-select" id="projectStatus" required>
-                                  <option value="active">Activo</option>
-                                  <option value="paused">Pausado</option>
-                                  <option value="completed">Completado</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="row mb-3">
-                              <div class="col-md-6">
-                                <label for="projectEmployee" class="form-label">Empleado asignado</label>
-                                <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newActividad.id_usuario">
-                                  <option [ngValue]="null">Seleccionar</option>
-                                  <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
-                                </select>
-                              </div>
-                            </div>
-                            
-                            <hr>
+<!-- Task Modal registrar -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="taskModalLabel">Nuevo Proyecto</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form (ngSubmit)="saveProyecto()"  #formActividad="ngForm">
+          
+          <div class="mb-3">
+            <label for="projectTitle" class="form-label">Título del proyecto</label>
+            <input type="text" class="form-control"  id="titulo" placeholder="Aquí ingrese el titulo"
+                    [(ngModel)]="newProyecto.titulo" name="titulo" required>
+          </div>
+          <div class="mb-3">
+            <label for="projectDescription" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" rows="3" 
+                        [(ngModel)]="newProyecto.descripcion" name="descripcion" required></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="projectDeadline" class="form-label">Fecha límite</label>
+              <input type="date" class="form-control" id="fecha_limite"
+                      [(ngModel)]="newProyecto.fecha_limite" name="fecha_limite" required>
+            </div>
+            <div class="col-md-6">
+              <label for="idUsuario" class="form-label">Empleado asignado</label>
+              <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newProyecto.id_usuario">
+                <option [ngValue]="null">Seleccionar</option>
+                <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
+              </select>
+            </div>
 
-                            <div class="mb-3">
-                              <label class="form-label d-flex justify-content-between">
-                                <span>Ítems del proyecto (mínimo 3)</span>
-                                <span>{{ newItems.length }} ítems</span>
-                              </label>
-                            
-                              <div *ngFor="let item of newItems; let i = index" class="mb-2">
-                                <input type="text" class="form-control" [(ngModel)]="newItems[i]" placeholder="Descripción del ítem" required>
-                              </div>
-                            
-                              <div class="text-muted small mb-2 mt-3">
-                                El porcentaje de progreso se calcula automáticamente en base a los ítems completados.
-                              </div>
-                            
-                              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addItem()">
-                                <i class="bx bx-plus"></i> Agregar ítem
-                              </button>
-                            </div>
-                            
-                             <!-- Botón -->
-                             <div class="modal-footer">
-                              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="submit" class="btn btn-turquoise" >Agregar</button>
-                            </div>
+          </div>
+          
+          <hr>
 
-                          </form>
-                        
-                        </div>
-                   
-                      </div>
-                    </div>
-                  </div>      
+          <div class="mb-3">
+            <label class="form-label d-flex justify-content-between">
+              <span>Ítems del proyecto (mínimo 3)</span>
+              <span>{{ newItems.length }} ítems</span>
+            </label>
+          
+            
+            <div *ngFor="let item of newItems; let i = index" class="mb-2 input-group">
+              <input type="text" class="form-control" [(ngModel)]="newItems[i]" placeholder="Descripción del ítem" required >
+              <!--PARA BOTON BORRAR-->
+              <button type="button" class="btn btn-danger" (click)="removeItem(i)">
+
+                <i class="bi bi-trash"></i> <!-- Asegúrate de tener Bootstrap Icons o usa una imagen -->
+            </button>
+            </div>
+          
+            <div class="text-muted small mb-2 mt-3">
+              El porcentaje de progreso se calcula automáticamente en base a los ítems completados.
+            </div>
+          
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addItem()">
+              <i class="bx bx-plus"></i> Agregar ítem
+            </button>
+          </div>
+          
+           <!-- Botón -->
+           <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-turquoise" >Agregar</button>
+          </div>
+
+        </form>
+      
+      </div>
+ 
+    </div>
+  </div>
+</div>      
+
+<!-- Task Modal Detalle -->
+<div class="modal fade" id="detalleProyectoModal" tabindex="-1" aria-labelledby="detalleProyectoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="detalleProyectoLabel">Detalle del Proyecto</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div (ngSubmit)="updateProyecto()"  class="modal-body">
+        <div class="mb-2">
+          <div class="d-flex justify-content-end mb-3">
+            <i class="bi bi-pencil-fill text-primary" role="button" title="Editar progreso" (click)="activarEdicionProgreso()"></i>
+          </div>          
+          
+          <div class="d-flex justify-content-between mb-1">
+            <span>Progreso</span>
+            <span>0 %</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar"role="progressbar"  aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-control" id="titulo" name="titulo"  [(ngModel)]="newProyecto.titulo" [disabled]="!modoEdicion">
+          <p class="form-control-plaintext"></p>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" id="descripcion" name="descripcion" rows="3"  [(ngModel)]="newProyecto.descripcion" [disabled]="!modoEdicion"></textarea>
+          <p class="form-control-plaintext"></p>
+        </div>  
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha de creación</label>
+            <input type="date" class="form-control"  id="fecha_limite" name="fecha_limite" [(ngModel)]="newProyecto.fecha_creacion" [disabled]="!modoEdicion">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Empleado asignado</label>
+            <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newProyecto.id_usuario" [disabled]="!modoEdicion">
+              <option [ngValue]="null">Seleccionar</option>
+              <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" id="estado" name="estado" [(ngModel)]="newProyecto.estado" [disabled]="!modoEdicion">
+              <option value="No Iniciado">No iniciado</option>
+              <option value="Iniciado">Iniciado</option>
+              <option value="En Progreso">En progreso</option>
+              <option value="Completado">Completado</option>
+              <option value="Cancelado">Cancelado</option>
+            </select>            
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha límite</label>
+            <input type="date" class="form-control"  id="fecha_limite" name="fecha_limite" [(ngModel)]="newProyecto.fecha_limite" [disabled]="!modoEdicion">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Última actualización</label>
+            <input type="date" class="form-control"  id="fecha_limite" name="fecha_limite" [(ngModel)]="newProyecto.fecha_actualizacion" [disabled]="!modoEdicion">
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="mb-3">
+          <label class="form-label">Ítems del Proyecto</label>
+          <ul class="list-group">
+            <li  class="list-group-item">
+             
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
+        <button *ngIf="mostrarBotonModificar" type="submit" class="btn btn-turquoise">Modificar</button>
+      </div>
+
+    </div>
+  </div>
+</div>

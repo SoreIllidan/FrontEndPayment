@@ -6,7 +6,7 @@ import { VistaActividad } from 'src/app/models/VistaActividad';
 import { ActividadService } from 'src/app/services/actividad.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-import * as bootstrap from 'bootstrap';
+// import * as bootstrap from 'bootstrap';
 
 
 import Swal from 'sweetalert2';

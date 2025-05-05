@@ -4,7 +4,7 @@ export class Proyecto {
     titulo: string='';
     descripcion: string='';
     fecha_limite: string='';
-    estado: string='';
+    estado: string='No Iniciado';
     progreso: number=0;
     fecha_creacion: string='';
     fecha_actualizacion: string='';
