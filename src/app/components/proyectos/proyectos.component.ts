@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemsProyecto } from 'src/app/models/ItemsProyecto';
 import { Proyecto } from 'src/app/models/Proyecto';
 
 
@@ -18,12 +19,15 @@ export class ProyectosComponent implements OnInit {
 
   proyecto: Proyecto [] = [];
   dataUsuario: Usuario [] = [];
+  itemsProyecto: ItemsProyecto[] = [];
 
   newItems: string[] = [];
   progreso: number = 0;
 
+
+
   newProyecto : Proyecto = new Proyecto();
- 
+
 
   constructor(private servicioProyecto: ProyectoService,
     private servicioUsuario: UsuarioService
@@ -37,6 +41,13 @@ export class ProyectosComponent implements OnInit {
   getAll() {
     this.servicioProyecto.getAll().subscribe(x => { this.proyecto = x;
       console.log("Lista de Proyectos", this.proyecto);  // Muestra los proyectos en la consola
+    });
+  }
+
+  getItemsPorProyecto(proyecto: Proyecto) {
+    this.servicioProyecto.getItemsPorProyecto(proyecto.id_proyecto).subscribe(items => {
+      this.itemsProyecto = items;
+      console.log("Ítems del proyecto:", this.itemsProyecto);
     });
   }
 
@@ -55,6 +66,7 @@ export class ProyectosComponent implements OnInit {
 
   poblarModal(proyectos: Proyecto): void {
     this.newProyecto = { ...proyectos}; 
+    this.getItemsPorProyecto(proyectos);
 
     if (this.newProyecto.fecha_creacion) {
       this.newProyecto.fecha_creacion = this.newProyecto.fecha_creacion.split('T')[0];
@@ -159,3 +171,4 @@ export class ProyectosComponent implements OnInit {
     }
 
 }
+

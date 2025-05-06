@@ -191,3 +191,31 @@ body .fc button {
 .header-title {
   font-size: 1.1rem; /* Tamaño del texto del header */
 }
+
+
+
+/**/
+
+/* Borde exterior completo personalizado */
+::ng-deep .fc .fc-scrollgrid {
+  border: 3px solid #3dd4da !important;  /* Todos los bordes */
+}
+
+/* Si deseas bordes izquierdo y derecho de otro color: */
+::ng-deep .fc .fc-scrollgrid {
+  border-left: 3px solid #3dd4da !important;
+  border-right: 3px solid #3dd4da !important; /* derecho con color distinto */
+}
+
+/* Bordes internos: inferior y derecho únicamente */
+::ng-deep .fc .fc-daygrid-day-frame,
+::ng-deep .fc .fc-col-header-cell {
+  border-right: 2px solid #3dd4da !important;
+  border-bottom: 2px solid #3dd4da !important;
+}
+
+/* Quitar borde derecho de la última celda para evitar duplicación */
+::ng-deep .fc .fc-daygrid-day:last-child .fc-daygrid-day-frame,
+::ng-deep .fc .fc-col-header-cell:last-child {
+  border-right: none !important;
+}
