@@ -8,13 +8,14 @@ import { Observable } from 'rxjs';
 })
 export class ItemsProyectoService {
 
-  private urlItemsProyecto: string = 'http://localhost:5130/api/ItemsProyecto/id/'
+  private urlItemsProyecto: string = 'http://localhost:5130/api/ItemsProyecto'
 
   constructor(private http:HttpClient) { }
 
   // Obtener los ítems de un proyecto por su ID
    getItemsPorProyecto(idProyecto: number): Observable<ItemsProyecto[]> {
-    return this.http.get<ItemsProyecto[]>(`${this.urlItemsProyecto}${idProyecto}`);
+    return this.http.get<ItemsProyecto[]>(this.urlItemsProyecto + '/id/' + idProyecto);
+
   }
   
   saveItemsProyecto(itemsProyecto: ItemsProyecto): Observable<Object>{

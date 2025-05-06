@@ -28,6 +28,7 @@ export class ProyectosComponent implements OnInit {
 
 
   newProyecto : Proyecto = new Proyecto();
+  newItemsProyecto : ItemsProyecto = new ItemsProyecto();
 
 
   constructor(private servicioProyecto: ProyectoService,
@@ -42,14 +43,13 @@ export class ProyectosComponent implements OnInit {
 
   getAll() {
     this.servicioProyecto.getAll().subscribe(x => { this.proyecto = x;
-      console.log("Lista de Proyectos", this.proyecto);  // Muestra los proyectos en la consola
+      // console.log("Lista de Proyectos", this.proyecto);  // Muestra los proyectos en la consola
     });
   }
 
   getItemsPorProyecto(proyecto: Proyecto) {
     this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe(items => {
       this.itemsProyecto = items;
-      console.log("Ítems del proyecto:", this.itemsProyecto);
     });
   }
 
@@ -132,22 +132,101 @@ export class ProyectosComponent implements OnInit {
   }
   
   saveProyecto() {
-      this.newProyecto.fecha_creacion = this.formatDate(new Date());
-      this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
-      this.newProyecto.estado ="No Iniciado";
+    console.log('Iniciando guardado del proyecto...');
+    
+    this.newProyecto.fecha_creacion = this.formatDate(new Date());
+    this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
+    this.newProyecto.estado = "No Iniciado";
+  
+    // Guardar el proyecto
+    console.log('Guardando proyecto...', this.newProyecto);
+    
+    this.servicioProyecto.saveProyecto(this.newProyecto).subscribe({
+      next: (proyectoGuardado: any) => {
+        const idProyecto = proyectoGuardado.id_proyecto;
+        console.log('Proyecto guardado con ID:', idProyecto);
+        
+        // Guardar ítems del proyecto
+        let itemsGuardados = 0;
+        console.log('Iniciando guardado de los ítems del proyecto...');
+        
+        for (let descripcion of this.newItems) {
+          if (!descripcion || descripcion.trim() === '') {
+            console.log('Descripción vacía o inválida, se omite.');
+            continue;
+          }
+          
+          const item: ItemsProyecto = {
+            ID_ITEMS: 0,
+            descripcion: descripcion.trim(),
+            ID_PROYECTO: idProyecto,
+            fecha_creacion: this.formatDate(new Date()),
+            estado: "No Iniciado"
+          };
+  
+          console.log('Guardando ítem:', item);
+          
+          this.servicioItems.saveItemsProyecto(item).subscribe({
+            next: () => {
+              console.log('Ítem guardado correctamente');
+              itemsGuardados++;
+              if (itemsGuardados === this.newItems.length) {
+                console.log('Todos los ítems han sido guardados.');
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Proyecto y sus ítems guardados correctamente",
+                  showConfirmButton: true,
+                  timer: 3000
+                });
+                this.getAll(); // o actualiza tu lista de proyectos
+                this.resetForm();
+              }
+            },
+            error: (err) => {
+              console.error('Error al guardar ítem:', err);
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Error al guardar ítem",
+                text: "Ocurrió un error al guardar uno de los ítems del proyecto.",
+                showConfirmButton: true
+              });
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al guardar proyecto:', err);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Error al guardar",
+          text: "No se pudo guardar el proyecto.",
+          showConfirmButton: true
+        });
+      }
+    });
+  }
+  
+  
+
+    saveItemsProyecto() {
+      this.newItemsProyecto.fecha_creacion = this.formatDate(new Date());
+      this.newItemsProyecto.estado ="No Iniciado";
    
-      console.log("nuevo proyecto: ",this.newProyecto);
-      this.servicioProyecto.saveProyecto(this.newProyecto).subscribe({
+      console.log("nuevo itemsproyecto: ",this.newItemsProyecto);
+      this.servicioItems.saveItemsProyecto(this.newItemsProyecto).subscribe({
         next: (response) => {
-          console.log('Proyecto guardado', response);
-          this.proyecto.push(response as Proyecto);
+          console.log('Iitems Proyecto guardado', response);
+          this.itemsProyecto.push(response as ItemsProyecto);
           this.getAll();
           this.resetForm();
   
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Se guardó correctamente el proyecto",
+            title: "Se guardó correctamente los Items proyecto",
             showConfirmButton: true,
             showCloseButton: true,
             showCancelButton: false,
@@ -155,7 +234,7 @@ export class ProyectosComponent implements OnInit {
           });
         },
         error: (err) => {
-          console.log('Error al guardar el proyecto', err);
+          console.log('Error al guardar los items proyecto', err);
 
             console.log('Errores de validación:', err.error.errors);
           
@@ -163,7 +242,7 @@ export class ProyectosComponent implements OnInit {
             position: "center",
             icon: "error",
             title: "Algo Pasó",
-            text: "No se logró guardar el proyecto, vuelva a intentar",
+            text: "No se logró guardar los items proyecto, vuelva a intentar",
             showConfirmButton: true,
             showCloseButton: true,
             showCancelButton: true,
