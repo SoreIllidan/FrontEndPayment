@@ -4,6 +4,7 @@ import { Proyecto } from 'src/app/models/Proyecto';
 
 
 import { Usuario } from 'src/app/models/Usuario';
+import { ItemsProyectoService } from 'src/app/services/items-proyecto.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -21,7 +22,7 @@ export class ProyectosComponent implements OnInit {
   dataUsuario: Usuario [] = [];
   itemsProyecto: ItemsProyecto[] = [];
 
-  newItems: string[] = [];
+  newItems: string[] = ['','',''];
   progreso: number = 0;
 
 
@@ -30,7 +31,8 @@ export class ProyectosComponent implements OnInit {
 
 
   constructor(private servicioProyecto: ProyectoService,
-    private servicioUsuario: UsuarioService
+              private servicioUsuario: UsuarioService,
+              private servicioItems: ItemsProyectoService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class ProyectosComponent implements OnInit {
   }
 
   getItemsPorProyecto(proyecto: Proyecto) {
-    this.servicioProyecto.getItemsPorProyecto(proyecto.id_proyecto).subscribe(items => {
+    this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe(items => {
       this.itemsProyecto = items;
       console.log("Ítems del proyecto:", this.itemsProyecto);
     });
@@ -62,8 +64,9 @@ export class ProyectosComponent implements OnInit {
     cerrarModal() {
       this.modoEdicion = false;
       this.mostrarBotonModificar = false;
+      this.itemsProyecto = []; // <-- Limpiar ítems al cerrar el modal
     }
-
+    
   poblarModal(proyectos: Proyecto): void {
     this.newProyecto = { ...proyectos}; 
     this.getItemsPorProyecto(proyectos);
@@ -170,5 +173,67 @@ export class ProyectosComponent implements OnInit {
       });
     }
 
+
+    // saveProyecto2() {
+    //   this.newProyecto.fecha_creacion = this.formatDate(new Date());
+    //   this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
+    //   this.newProyecto.estado = "No Iniciado";
+    
+    //   // Validar que haya al menos 3 ítems
+    //   if (this.newItems.filter(i => i.trim() !== '').length < 3) {
+    //     Swal.fire({
+    //       icon: 'warning',
+    //       title: 'Faltan ítems',
+    //       text: 'Debes ingresar al menos 3 ítems para continuar.',
+    //     });
+    //     return;
+    //   }
+    
+    //   console.log("nuevo proyecto: ", this.newProyecto);
+    
+    //   this.servicioProyecto.saveProyecto(this.newProyecto).subscribe({
+    //     next: (response) => {
+    //       const idProyecto = response.id_proyecto;
+    //       console.log('Proyecto guardado con ID:', idProyecto);
+    
+    //       for (let descripcion of this.newItems) {
+    //         const item: ItemsProyecto = {
+    //           ID_ITEMS: 0,
+    //           ID_PROYECTO: idProyecto,
+    //           descripcion: descripcion,
+    //           estado: 'No Iniciado',
+    //           fecha_creacion: new Date()
+    //         };
+    
+    //         this.servicioProyecto.saveItemsProyecto(item).subscribe({
+    //           next: () => console.log('Ítem registrado:', item.descripcion),
+    //           error: err => console.error('Error al registrar ítem:', err)
+    //         });
+    //       }
+    
+    //       this.getAll();
+    //       this.resetForm();
+    
+    //       Swal.fire({
+    //         position: "center",
+    //         icon: "success",
+    //         title: "Se guardó correctamente el proyecto y sus ítems",
+    //         showConfirmButton: true,
+    //         timer: 3000
+    //       });
+    //     },
+    //     error: (err) => {
+    //       console.error('Error al guardar el proyecto', err);
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "Error",
+    //         text: "No se logró guardar el proyecto. Inténtalo nuevamente.",
+    //         showConfirmButton: true,
+    //         timer: 3000
+    //       });
+    //     }
+    //   });
+    // }
+    
 }
 

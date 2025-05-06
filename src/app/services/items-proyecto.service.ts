@@ -1,0 +1,24 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ItemsProyecto } from '../models/ItemsProyecto';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ItemsProyectoService {
+
+  private urlItemsProyecto: string = 'http://localhost:5130/api/ItemsProyecto/id/'
+
+  constructor(private http:HttpClient) { }
+
+  // Obtener los ítems de un proyecto por su ID
+   getItemsPorProyecto(idProyecto: number): Observable<ItemsProyecto[]> {
+    return this.http.get<ItemsProyecto[]>(`${this.urlItemsProyecto}${idProyecto}`);
+  }
+  
+  saveItemsProyecto(itemsProyecto: ItemsProyecto): Observable<Object>{
+    return this.http.post(this.urlItemsProyecto, itemsProyecto);
+  }
+
+}

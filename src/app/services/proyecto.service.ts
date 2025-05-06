@@ -10,14 +10,8 @@ import { ItemsProyecto } from '../models/ItemsProyecto';
 export class ProyectoService { 
 
   private urlProyecto: string = 'http://localhost:5130/api/Proyecto';
-  private urlItemsProyecto: string = 'http://localhost:5130/api/ItemsProyecto/id/'
 
   constructor(private http:HttpClient) { }
-
-  // Obtener los ítems de un proyecto por su ID
-  getItemsPorProyecto(idProyecto: number): Observable<ItemsProyecto[]> {
-    return this.http.get<ItemsProyecto[]>(`${this.urlItemsProyecto}${idProyecto}`);
-  }
   
   getAll():Observable<Proyecto[]>{
         return this.http.get<Proyecto[]>(this.urlProyecto);
@@ -26,6 +20,6 @@ export class ProyectoService {
   saveProyecto(proyecto: Proyecto): Observable<Object>{
         return this.http.post(this.urlProyecto, proyecto);
   }
-  
+
 
 }
