@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ItemsProyecto } from '../models/ItemsProyecto';
 import { Observable } from 'rxjs';
+import { ActualizarItemDto } from '../models/ActualizarItemDto';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,9 @@ export class ItemsProyectoService {
     return this.http.delete(`${this.urlItemsProyecto}/proyecto/${idProyecto}`);
   }  
 
+  updateEstadoItem(dto: ActualizarItemDto): Observable<any> {
+    return this.http.put(`${this.urlItemsProyecto}`, dto);
+  }
 
 
 }

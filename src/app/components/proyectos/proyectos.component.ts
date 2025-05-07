@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActualizarItemDto } from 'src/app/models/ActualizarItemDto';
 import { ItemsProyecto } from 'src/app/models/ItemsProyecto';
 import { Proyecto } from 'src/app/models/Proyecto';
 
@@ -28,7 +29,8 @@ export class ProyectosComponent implements OnInit {
   newItems: string[] = [];
   progreso: number = 0;
 
-
+  modoEdicion: boolean = false;
+  mostrarBotonModificar: boolean = false;
 
   newProyecto : Proyecto = new Proyecto();
   newItemsProyecto : ItemsProyecto = new ItemsProyecto();
@@ -48,12 +50,30 @@ export class ProyectosComponent implements OnInit {
     return index;
   }
   
- 
-  
-
   getAll() {
     this.servicioProyecto.getAll().subscribe(x => { this.proyecto = x;
       // console.log("Lista de Proyectos", this.proyecto);  // Muestra los proyectos en la consola
+    });
+  }
+
+  updateItem(item: any) {
+    console.log('ITEM =>', item);
+    const dto: ActualizarItemDto = {
+      ID_PROYECTO: item.id_proyecto,   // Asegúrate de usar las propiedades correctas
+      ID_ITEMS: item.id_items,
+      NuevoEstado: 'Iniciado'
+    };
+
+    console.log("DTO =>", dto);
+  
+    this.servicioItems.updateEstadoItem(dto).subscribe({
+      next: res => {
+        Swal.fire('¡Actualizado!', 'Estado cambiado a "Iniciado".', 'success');
+       // this.getItems(); // refresca la lista
+      },
+      error: err => {
+        Swal.fire('Error', 'No se pudo actualizar el ítem.', 'error');
+      }
     });
   }
 
@@ -62,9 +82,6 @@ export class ProyectosComponent implements OnInit {
       this.itemsProyecto = items;
     });
   }
-
-    modoEdicion: boolean = false;
-    mostrarBotonModificar: boolean = false;
 
     activarEdicionProgreso() {
       this.modoEdicion = true;
@@ -111,8 +128,8 @@ export class ProyectosComponent implements OnInit {
     this.newProyecto = new Proyecto();
     this.newProyecto.id_proyecto = 0;
     this.newItems = [''];
-
   }
+
   formatDate(date: Date): string {
     const d = new Date(date);
     const month = '' + (d.getMonth() + 1).toString().padStart(2, '0');
@@ -240,7 +257,7 @@ export class ProyectosComponent implements OnInit {
 
   getEstadoColor(estado: string): string {
 
-    
+  
     switch (estado) {
       case 'No Iniciado':
         return 'bg-secondary text-white';  // Gris
@@ -257,8 +274,6 @@ export class ProyectosComponent implements OnInit {
     }
   }
 
-  
-  
 
     saveItemsProyecto() {
       this.newItemsProyecto.fecha_creacion = this.formatDate(new Date());
@@ -301,67 +316,6 @@ export class ProyectosComponent implements OnInit {
       });
     }
 
-
-    // saveProyecto2() {
-    //   this.newProyecto.fecha_creacion = this.formatDate(new Date());
-    //   this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
-    //   this.newProyecto.estado = "No Iniciado";
-    
-    //   // Validar que haya al menos 3 ítems
-    //   if (this.newItems.filter(i => i.trim() !== '').length < 3) {
-    //     Swal.fire({
-    //       icon: 'warning',
-    //       title: 'Faltan ítems',
-    //       text: 'Debes ingresar al menos 3 ítems para continuar.',
-    //     });
-    //     return;
-    //   }
-    
-    //   console.log("nuevo proyecto: ", this.newProyecto);
-    
-    //   this.servicioProyecto.saveProyecto(this.newProyecto).subscribe({
-    //     next: (response) => {
-    //       const idProyecto = response.id_proyecto;
-    //       console.log('Proyecto guardado con ID:', idProyecto);
-    
-    //       for (let descripcion of this.newItems) {
-    //         const item: ItemsProyecto = {
-    //           ID_ITEMS: 0,
-    //           ID_PROYECTO: idProyecto,
-    //           descripcion: descripcion,
-    //           estado: 'No Iniciado',
-    //           fecha_creacion: new Date()
-    //         };
-    
-    //         this.servicioProyecto.saveItemsProyecto(item).subscribe({
-    //           next: () => console.log('Ítem registrado:', item.descripcion),
-    //           error: err => console.error('Error al registrar ítem:', err)
-    //         });
-    //       }
-    
-    //       this.getAll();
-    //       this.resetForm();
-    
-    //       Swal.fire({
-    //         position: "center",
-    //         icon: "success",
-    //         title: "Se guardó correctamente el proyecto y sus ítems",
-    //         showConfirmButton: true,
-    //         timer: 3000
-    //       });
-    //     },
-    //     error: (err) => {
-    //       console.error('Error al guardar el proyecto', err);
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Error",
-    //         text: "No se logró guardar el proyecto. Inténtalo nuevamente.",
-    //         showConfirmButton: true,
-    //         timer: 3000
-    //       });
-    //     }
-    //   });
-    // }
     
 }
 

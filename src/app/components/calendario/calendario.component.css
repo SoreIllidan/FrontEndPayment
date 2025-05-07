@@ -17,6 +17,7 @@
 .new-event-btn {
   background-color: #a765fe !important;
   border-color: #a765fe !important;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /*Selección nuevo evento btn*/
@@ -81,11 +82,25 @@
 }
 
 /*Colorear tarjeta del calendario*/
-.card .card-body {
+.card {
   background-color: #e8e9ff;
   border-radius: 10px;
+  border: none;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /*Fuente*/
 }
 
+.card-body {
+  background-color: #e8e9ff;
+  border-radius: 10px;
+  border: none;
+}
+
+/*Fuente*/
 #calendar-page .titulo-calendario {
   font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*Ajustar espaciado*/
+.content-header {
+  margin-bottom: 13px;
 }
