@@ -49,7 +49,7 @@
                 <small class="text-muted">Fecha límite: {{ data.fecha_limite | date: 'dd/MM/yyyy' }}</small>
               </div>
               <button class="btn btn-sm btn-outline-primary" (click)="poblarModal(data)" data-bs-toggle="modal" 
-              data-bs-target="#detalleProyectoModal">Detalles</button>
+              data-bs-target="#updateProyectoModal">Detalles</button>
             </div>
           </div>
         </div>
@@ -138,13 +138,13 @@
   </div>
 </div>      
 
-<!-- Task Modal Detalle -->
-<div class="modal fade" id="detalleProyectoModal" tabindex="-1" aria-labelledby="detalleProyectoLabel" aria-hidden="true">
+<!-- Task Modal Update -->
+<div class="modal fade" id="updateProyectoModal" tabindex="-1" aria-labelledby="detalleProyectoLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       
       <div class="modal-header">
-        <h5 class="modal-title" id="detalleProyectoLabel">Detalle del Proyecto</h5>
+        <h5 class="modal-title" id="detalleProyectoLabel">Modificar el Proyecto</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -219,24 +219,31 @@
         <div class="mb-3">
           <label class="form-label">Ítems del Proyecto</label>
           <ul class="list-group">
-            <li *ngFor="let item of itemsProyecto" class="list-group-item">
-              <div class="d-flex justify-content-between align-items-start flex-column flex-md-row">
-                <div>
-                  <h3 class="mb-1">{{ item.descripcion }}</h3>
-      
-                  <small class="text-muted">Fecha: {{ item.fecha_creacion | date: 'shortDate' }}</small>
+            <li *ngFor="let item of itemsProyecto; let i = index" class="list-group-item">
+              <div class="d-flex justify-content-between align-items-start flex-column flex-md-row w-100">
+                <div class="flex-grow-1 me-2">
+                  <!-- Aquí está el input en lugar del <h3> -->
+                  <input type="text"
+                         class="form-control mb-1"
+                         [(ngModel)]="item.descripcion"
+                         [name]="'descripcion_' + i"
+                         placeholder="Descripción del ítem" [disabled]="!modoEdicion"/>
+        
+                  <!-- <small class="text-muted">Fecha: {{ item.fecha_creacion | date: 'shortDate' }}</small> -->
                 </div>
-                <!-- Opcional: acciones -->
+        
+                <!-- Botones de acción -->
                 <div class="mt-2 mt-md-0">
                   <button class="btn btn-sm btn-primary me-2">Iniciar</button>
-                  <button class="btn btn-sm btn-danger" title="Eliminar">
+                  <button class="btn btn-sm btn-danger" title="Eliminar" (click)="removeItem(i)">
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
               </div>
             </li>
           </ul>
-        </div>        
+        </div>
+          
         
         
       </div>

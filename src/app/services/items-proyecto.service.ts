@@ -22,4 +22,10 @@ export class ItemsProyectoService {
     return this.http.post(this.urlItemsProyecto, itemsProyecto);
   }
 
+  deleteItemsByProyecto(idProyecto: number): Observable<Object> {
+    return this.http.delete(`${this.urlItemsProyecto}/proyecto/${idProyecto}`);
+  }  
+
+
+
 }

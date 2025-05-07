@@ -48,6 +48,8 @@ export class ProyectosComponent implements OnInit {
     return index;
   }
   
+ 
+  
 
   getAll() {
     this.servicioProyecto.getAll().subscribe(x => { this.proyecto = x;
@@ -108,6 +110,8 @@ export class ProyectosComponent implements OnInit {
   resetForm() {
     this.newProyecto = new Proyecto();
     this.newProyecto.id_proyecto = 0;
+    this.newItems = [''];
+
   }
   formatDate(date: Date): string {
     const d = new Date(date);
@@ -174,9 +178,65 @@ export class ProyectosComponent implements OnInit {
   }
   
 
-  updateProyecto(){
-    
+  async updateProyecto() {
+    const itemsValidos = this.newItems
+      .map(desc => desc.trim())
+      .filter(desc => desc !== '');
+  
+    if (itemsValidos.length < 3) {
+      Swal.fire({
+        icon: "warning",
+        title: "Debe ingresar al menos 3 ítems válidos",
+        showConfirmButton: true
+      });
+      return;
+    }
+  
+    // Actualización de fecha y estado
+    this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
+    this.newProyecto.estado = "No Iniciado";  // O puedes usar otro estado según el flujo
+  
+    try {
+      // Actualizamos el proyecto
+      const proyectoActualizado: any = await this.servicioProyecto.updateProyecto(this.newProyecto).toPromise();
+      const idProyecto = proyectoActualizado.id_proyecto;
+  
+      // Eliminar ítems anteriores (si es necesario, o hacer otro tipo de actualización)
+      await this.servicioItems.deleteItemsByProyecto(idProyecto).toPromise();  // Asegúrate de tener el método `deleteItemsByProyecto`
+  
+      // Guardar los nuevos ítems
+      for (let descripcion of itemsValidos) {
+        const item: ItemsProyecto = {
+          ID_ITEMS: 0,
+          descripcion,
+          ID_PROYECTO: idProyecto,
+          fecha_creacion: this.formatDate(new Date()),
+          estado: "No Iniciado"
+        };
+        await this.servicioItems.saveItemsProyecto(item).toPromise();
+      }
+  
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Proyecto y sus ítems actualizados correctamente",
+        showConfirmButton: true,
+        timer: 3000
+      });
+  
+      this.getAll();  // Refresca la lista de proyectos
+      this.resetForm();  // Resetea el formulario después de guardar
+  
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "Error al actualizar",
+        text: "Hubo un problema actualizando el proyecto o sus ítems."
+      });
+    }
   }
+  
 
   getEstadoColor(estado: string): string {
 
