@@ -11,6 +11,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 
 import Swal from 'sweetalert2';
 
+
+
+
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
@@ -22,7 +25,7 @@ export class ProyectosComponent implements OnInit {
   dataUsuario: Usuario [] = [];
   itemsProyecto: ItemsProyecto[] = [];
 
-  newItems: string[] = ['','',''];
+  newItems: string[] = [];
   progreso: number = 0;
 
 
@@ -40,6 +43,11 @@ export class ProyectosComponent implements OnInit {
     this.getAll(); 
     this.getAllUsuario(); 
   }
+
+  trackByIndex(index: number, item: string): number {
+    return index;
+  }
+  
 
   getAll() {
     this.servicioProyecto.getAll().subscribe(x => { this.proyecto = x;
@@ -110,11 +118,69 @@ export class ProyectosComponent implements OnInit {
     return [year, month, day].join('-');
   }
 
+  async saveProyecto() {
+    this.newProyecto.fecha_creacion = this.formatDate(new Date());
+    this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
+    this.newProyecto.estado = "No Iniciado";
+  
+    try {
+      const proyectoGuardado: any = await this.servicioProyecto.saveProyecto(this.newProyecto).toPromise();
+      const idProyecto = proyectoGuardado.id_proyecto;
+  
+      const itemsValidos = this.newItems
+        .map(desc => desc.trim())
+        .filter(desc => desc !== '');
+  
+      if (itemsValidos.length < 3) {
+        Swal.fire({
+          icon: "warning",
+          title: "Debe ingresar al menos 3 ítems válidos",
+          showConfirmButton: true
+        });
+        return;
+      }
+  
+      for (let descripcion of itemsValidos) {
+        const item: ItemsProyecto = {
+          ID_ITEMS: 0,
+          descripcion,
+          ID_PROYECTO: idProyecto,
+          fecha_creacion: this.formatDate(new Date()),
+          estado: "No Iniciado"
+        };
+  
+        await this.servicioItems.saveItemsProyecto(item).toPromise();
+      }
+  
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Proyecto y sus ítems guardados correctamente",
+        showConfirmButton: true,
+        timer: 3000
+      });
+  
+      this.getAll();
+      this.resetForm();
+  
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "Error al guardar",
+        text: "Hubo un problema guardando el proyecto o sus ítems."
+      });
+    }
+  }
+  
+
   updateProyecto(){
     
   }
 
   getEstadoColor(estado: string): string {
+
+    
     switch (estado) {
       case 'No Iniciado':
         return 'bg-secondary text-white';  // Gris
@@ -130,85 +196,7 @@ export class ProyectosComponent implements OnInit {
         return 'bg-light text-dark';       // Por defecto, gris claro
     }
   }
-  
-  saveProyecto() {
-    console.log('Iniciando guardado del proyecto...');
-    
-    this.newProyecto.fecha_creacion = this.formatDate(new Date());
-    this.newProyecto.fecha_actualizacion = this.formatDate(new Date());
-    this.newProyecto.estado = "No Iniciado";
-  
-    // Guardar el proyecto
-    console.log('Guardando proyecto...', this.newProyecto);
-    
-    this.servicioProyecto.saveProyecto(this.newProyecto).subscribe({
-      next: (proyectoGuardado: any) => {
-        const idProyecto = proyectoGuardado.id_proyecto;
-        console.log('Proyecto guardado con ID:', idProyecto);
-        
-        // Guardar ítems del proyecto
-        let itemsGuardados = 0;
-        console.log('Iniciando guardado de los ítems del proyecto...');
-        console.log("Data Items => ", this.newItemsProyecto);
-        
-        for (let descripcion of this.newItems) {
-          if (!descripcion || descripcion.trim() === '') {
-            console.log('Descripción vacía o inválida, no se omite.');
-            continue;
-          }
-          
-          const item: ItemsProyecto = {
-            ID_ITEMS: 0,
-            descripcion: descripcion.trim(),
-            ID_PROYECTO: idProyecto,
-            fecha_creacion: this.formatDate(new Date()),
-            estado: "No Iniciado"
-          };
-  
-          console.log('Guardando ítems varios:', item);
-          
-          this.servicioItems.saveItemsProyecto(item).subscribe({
-            next: () => {
-              console.log('Ítems guardado correctamente');
-              itemsGuardados++;
-              if (itemsGuardados === this.newItems.length) {
-                console.log('Todos los ítems han sido guardados.');
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Proyecto y sus ítems guardados correctamente",
-                  showConfirmButton: true,
-                  timer: 3000
-                });
-                this.getAll(); // o actualiza tu lista de proyectos
-                this.resetForm();
-              }
-            },
-            error: (err) => {
-              console.error('Error al guardar ítems:', err);
-              Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Error al guardar ítem",
-                text: "Ocurrió un error al guardar uno de los ítems del proyecto.",
-                showConfirmButton: true
-              });
-            }
-          });
-        }
-      },
-      error: (err) => {
-        console.error('Error al guardar proyecto:', err);
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "Error al guardar",
-          text: "No se pudo guardar el proyecto.",
-          showConfirmButton: true
-        });
-      }
-    });
-  }
+
   
   
 

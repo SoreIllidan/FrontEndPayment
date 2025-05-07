@@ -103,14 +103,17 @@
               <span>{{ newItems.length }} ítems</span>
             </label>           
             
-            <div *ngFor="let item of newItems; let i = index" class="mb-2 input-group">
-              <input type="text" class="form-control" [(ngModel)]="newItems[i]" placeholder="Descripción del ítem" required >
-              <!--PARA BOTON BORRAR-->
+            <div *ngFor="let item of newItems; let i = index; trackBy: trackByIndex" class="mb-2 input-group">
+              <input type="text" class="form-control"
+                     [(ngModel)]="newItems[i]"
+                     [name]="'item_' + i"
+                     placeholder="Descripción del ítem"
+                     required >
               <button type="button" class="btn btn-danger" (click)="removeItem(i)">
-
-                <i class="bi bi-trash"></i> <!-- Asegúrate de tener Bootstrap Icons o usa una imagen -->
-            </button>
+                <i class="bi bi-trash"></i>
+              </button>
             </div>
+            
           
             <div class="text-muted small mb-2 mt-3">
               El porcentaje de progreso se calcula automáticamente en base a los ítems completados.
