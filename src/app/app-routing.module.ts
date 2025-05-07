@@ -7,6 +7,8 @@ import { ReporteComponent } from './components/reporte/reporte.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { ActividadComponent } from './components/actividad/actividad.component';
+//AGREGADO
+import { PersonasComponent } from './components/personas/personas.component';
 
 const routes: Routes = [
   
@@ -16,7 +18,8 @@ const routes: Routes = [
   {path: 'Calendario', component:CalendarioComponent},
   {path: 'proyectos', component:ProyectosComponent},
   {path: 'reportes', component:ReporteComponent},
-  {path: 'notificaciones', component:NotificacionesComponent}
+  {path: 'notificaciones', component:NotificacionesComponent},
+  {path: 'personas', component:PersonasComponent}
 
 ];
 

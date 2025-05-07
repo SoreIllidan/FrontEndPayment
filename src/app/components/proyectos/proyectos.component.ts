@@ -149,10 +149,11 @@ export class ProyectosComponent implements OnInit {
         // Guardar ítems del proyecto
         let itemsGuardados = 0;
         console.log('Iniciando guardado de los ítems del proyecto...');
+        console.log("Data Items => ", this.newItemsProyecto);
         
         for (let descripcion of this.newItems) {
           if (!descripcion || descripcion.trim() === '') {
-            console.log('Descripción vacía o inválida, se omite.');
+            console.log('Descripción vacía o inválida, no se omite.');
             continue;
           }
           
@@ -164,11 +165,11 @@ export class ProyectosComponent implements OnInit {
             estado: "No Iniciado"
           };
   
-          console.log('Guardando ítem:', item);
+          console.log('Guardando ítems varios:', item);
           
           this.servicioItems.saveItemsProyecto(item).subscribe({
             next: () => {
-              console.log('Ítem guardado correctamente');
+              console.log('Ítems guardado correctamente');
               itemsGuardados++;
               if (itemsGuardados === this.newItems.length) {
                 console.log('Todos los ítems han sido guardados.');
@@ -184,7 +185,7 @@ export class ProyectosComponent implements OnInit {
               }
             },
             error: (err) => {
-              console.error('Error al guardar ítem:', err);
+              console.error('Error al guardar ítems:', err);
               Swal.fire({
                 position: "center",
                 icon: "error",

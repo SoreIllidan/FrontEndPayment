@@ -26,6 +26,9 @@ import { MatTableModule } from '@angular/material/table';
 import { TareaComponent } from './components/tarea/tarea.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ActividadComponent } from './components/actividad/actividad.component';
+//AGREGADO
+import { PersonasComponent } from './components/personas/personas.component';
+
 
 
 
@@ -39,7 +42,10 @@ import { ActividadComponent } from './components/actividad/actividad.component';
     NotificacionesComponent,
     CalendarioComponent,
     DashboardComponent,
-    ActividadComponent
+    ActividadComponent,
+    //AGREGADO
+    PersonasComponent
+
   ],
   imports: [
     BrowserModule,
