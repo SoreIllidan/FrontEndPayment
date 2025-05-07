@@ -1,153 +1,53 @@
-/* ---------- SOBRESCRITURA TOTAL DE BOTONES ---------- */
-body .fc .fc-toolbar.fc-header-toolbar .fc-button-group button,
-body .fc .fc-toolbar.fc-header-toolbar .fc-today-button {
-  background-color: #a864ff !important;
-  border-color: #a864ff !important;
-  color: white !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Efecto hover con pseudo-elemento */
-body .fc button:hover::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.15);
-}
-
-/* Estados activos y seleccionados */
-body .fc .fc-button-active,
-body .fc .fc-button:active {
-  background-color: #6a30b5 !important;
-  border-color: #6a30b5 !important;
-  transform: scale(0.98);
-  box-shadow: 0 2px 8px rgba(106,48,181,0.3) !important;
-}
-
-/* Iconos dentro de botones */
-body .fc button .fc-icon {
-  color: white !important;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
-}
-
-/* Fuerza colores en estilos inline */
-body .fc button[style*="background-color"] {
-  background-color: #9366d9 !important;
-  border-color: #9366d9 !important;
-}
-
-/* Deshabilita transiciones iniciales */
-body .fc button {
-  transition: none !important;
-}
-
-/* ---------- IMPLEMENTACIÓN OBLIGATORIA ---------- */
-/* Añade esto al final de tu archivo CSS */
-@layer overrides {
-  body .fc button {
-    all: unset;
-    background-color: #9366d9 !important;
-    border-color: #9366d9 !important;
-    color: white !important;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 3px;
-  }
-}
-
+/* Título Calendario*/
 .page-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--dark);
+  font-weight: bold;
 }
 
-.new-event-btn {
-  background-color: #04bac0 !important;
-  border-color: #04bac0 !important;
+/*Modal*/
+.header-title {
+  font-size: 1.1rem; /* Tamaño del texto del header */
+  font-weight: bold; /* Negrita */
 }
 
-.new-event-btn:hover {
-  background-color: #04bac0 !important;
-  border-color: #04bac0 !important;
-}
-
-#eventModal .btn-success {
-  background-color: #04bac0; 
-  border-color: #04bac0;
-}
-
-/* Color del botón de cierre (X) */
 .custom-modal-header .btn-close {
-  filter: invert(1);  /* Convierte el icono a blanco */
+  filter: invert(1); /* Convierte el x a blanco */
+}
+
+/*Btn Nuevo Evento¨*/
+.new-event-btn {
+  background-color: #a765fe !important;
+  border-color: #a765fe !important;
+}
+
+/*Selección nuevo evento btn*/
+.new-event-btn:hover {
+  background-color: #8551c9 !important;
+  border-color: #8551c9 !important;
 }
 
 .my-custom-header {
-  background-color: #9367d9; /* Header modal crear nuevo evento */
+  background-color: #a765fe; /* Color headear btn-nuevo-evento*/
 }
 
-.header-title {
-  font-size: 1.1rem; /* Tamaño del texto del header */
+#eventModal .btn-success {
+  background-color: #4fad6b; 
+  border-color: #4fad6b;
 }
 
-/* ---------- SOBRESCRITURA TOTAL DE BOTONES ---------- */
-body .fc .fc-toolbar.fc-header-toolbar .fc-button-group button,
-body .fc .fc-toolbar.fc-header-toolbar .fc-today-button {
-  background-color: #9366d9 !important;
-  border-color: #9366d9 !important;
-  color: white !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+/* Borde del calendario */
+:host ::ng-deep .fc .fc-scrollgrid {
+  border-collapse: collapse !important; /* Une los bordes */
+}
+:host ::ng-deep .fc .fc-scrollgrid td,
+:host ::ng-deep .fc .fc-scrollgrid th {
+  border: 1px solid #04bac0 !important;
 }
 
-/* Efecto hover con pseudo-elemento */
-body .fc button:hover::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.15);
-}
-
-/* Estados activos y seleccionados */
-body .fc .fc-button-active,
-body .fc .fc-button:active {
-  background-color: #6a30b5 !important;
-  border-color: #6a30b5 !important;
-  transform: scale(0.98);
-  box-shadow: 0 2px 8px rgba(106,48,181,0.3) !important;
-}
-
-/* Iconos dentro de botones */
-body .fc button .fc-icon {
-  color: white !important;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
-}
-
-/* Fuerza colores en estilos inline */
-body .fc button[style*="background-color"] {
-  background-color: #9366d9 !important;
-  border-color: #9366d9 !important;
-}
-
-/* Deshabilita transiciones iniciales */
-body .fc button {
-  transition: none !important;
-}
-
-/*Botones */
+/* Botones del calendario */
 @layer overrides {
   body .fc button {
     all: unset;
-    background-color: #04bac0!important;
+    background-color: #04bac0 !important;
     border-color: #04bac0 !important;
     color: white !important;
     padding: 6px 12px;
@@ -155,67 +55,37 @@ body .fc button {
     cursor: pointer;
     margin: 0 3px;
   }
+
+  body .fc button:hover {
+    background-color: #07a8ad !important; 
+    border-color: #07a8ad !important;
+  }
 }
 
-.page-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--dark);
+/* Reglas para evitar la deformación */
+#calendar-page .card {
+  overflow: hidden;
 }
 
-/*Boton nuevo evento*/
-.new-event-btn {
-  background-color: #a765fe !important;
-  border-color: #a765fe !important;
+#calendar {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
 }
 
-.new-event-btn:hover {
-  background-color: #04bac0 !important;
-  border-color: #04bac0 !important;
+/* Para pantallas grandes */
+@media (min-width: 768px) {
+  #calendar-page .card-body {
+    min-height: 800px;
+  }
 }
 
-#eventModal .btn-success {
-  background-color: #04bac0; 
-  border-color: #04bac0;
+/*Colorear tarjeta del calendario*/
+.card .card-body {
+  background-color: #e8e9ff;
+  border-radius: 10px;
 }
 
-/* Color del botón de cierre (X) */
-.custom-modal-header .btn-close {
-  filter: invert(1);  /* Convierte el icono a blanco */
-}
-
-.my-custom-header {
-  background-color: #9367d9; /* Header modal crear nuevo evento */
-}
-
-.header-title {
-  font-size: 1.1rem; /* Tamaño del texto del header */
-}
-
-
-
-/**/
-
-/* Borde exterior completo personalizado */
-::ng-deep .fc .fc-scrollgrid {
-  border: 3px solid #3dd4da !important;  /* Todos los bordes */
-}
-
-/* Si deseas bordes izquierdo y derecho de otro color: */
-::ng-deep .fc .fc-scrollgrid {
-  border-left: 3px solid #3dd4da !important;
-  border-right: 3px solid #3dd4da !important; /* derecho con color distinto */
-}
-
-/* Bordes internos: inferior y derecho únicamente */
-::ng-deep .fc .fc-daygrid-day-frame,
-::ng-deep .fc .fc-col-header-cell {
-  border-right: 2px solid #3dd4da !important;
-  border-bottom: 2px solid #3dd4da !important;
-}
-
-/* Quitar borde derecho de la última celda para evitar duplicación */
-::ng-deep .fc .fc-daygrid-day:last-child .fc-daygrid-day-frame,
-::ng-deep .fc .fc-col-header-cell:last-child {
-  border-right: none !important;
+#calendar-page .titulo-calendario {
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

@@ -1,5 +1,5 @@
 // Importaciones necesarias para componentes y plugins
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Calendar, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -12,7 +12,7 @@ import { Modal } from 'bootstrap';
   templateUrl: './calendario.component.html',
   styleUrls: ['./calendario.component.css']
 })
-export class CalendarioComponent implements OnInit {
+export class CalendarioComponent implements OnInit, OnDestroy {
   // Instancias del calendario y modales de Bootstrap
   calendar!: Calendar;
   modal!: Modal;
@@ -27,10 +27,29 @@ export class CalendarioComponent implements OnInit {
   eventDescription = '';
   eventPriority = 'media';
 
+  private resizeTimeout: any;
+
   // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
-    this.initCalendar(); // Inicializa el calendario
-    this.deleteModal = new Modal(document.getElementById('confirmDeleteModal')!); // Instancia del modal de confirmación
+    this.initCalendar();
+    this.deleteModal = new Modal(document.getElementById('confirmDeleteModal')!);
+    window.addEventListener('resize', this.handleResize.bind(this));
+  }
+
+  // Método que se ejecuta al destruir el componente
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.handleResize.bind(this));
+    clearTimeout(this.resizeTimeout);
+  }
+
+  // Maneja el redimensionamiento de la ventana
+  private handleResize() {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      if (this.calendar) {
+        this.calendar.updateSize();
+      }
+    }, 300);
   }
 
   // Inicializa el calendario con configuraciones y eventos
@@ -38,72 +57,79 @@ export class CalendarioComponent implements OnInit {
     const calendarEl = document.getElementById('calendar');
 
     this.calendar = new Calendar(calendarEl!, {
-      plugins: [dayGridPlugin, interactionPlugin, bootstrap5Plugin], // Plugins usados
+      plugins: [dayGridPlugin, interactionPlugin, bootstrap5Plugin],
       themeSystem: 'bootstrap5',
       initialView: 'dayGridMonth',
-      locale: 'es', // Idioma en español
+      locale: 'es',
       timeZone: 'America/Lima',
-      firstDay: 1, // Lunes como primer día de la semana
+      firstDay: 1,
+      contentHeight: 'auto',
+      expandRows: true,
       titleFormat: {
         year: 'numeric',
         month: 'long'
       },
       headerToolbar: {
-        left: 'prev,next today', // Botones a la izquierda
+        left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,dayGridWeek' // Vistas disponibles
+        right: 'dayGridMonth,dayGridWeek'
       },
       buttonText: {
         today: 'Hoy',
         month: 'Mes',
         week: 'Semana',
       },
-      events: this.getEventsFromStorage(), // Eventos guardados en localStorage
-      eventClassNames: (arg) => [`fc-event-priority-${arg.event.extendedProps.priority}`], // Clase según prioridad
-      eventClick: this.handleEventClick.bind(this), // Maneja clic en evento
-      dateClick: this.handleDateClick.bind(this) // Maneja clic en día vacío
+      events: this.getEventsFromStorage(),
+      eventDisplay: 'auto',
+      eventClassNames: (arg) => [`fc-event-priority-${arg.event.extendedProps.priority}`],
+      eventClick: this.handleEventClick.bind(this),
+      dateClick: this.handleDateClick.bind(this),
+      windowResize: () => {
+        if (this.calendar) {
+          this.calendar.updateSize();
+        }
+      }
     });
+    
 
-    this.calendar.render(); // Renderiza el calendario en pantalla
-    this.modal = new Modal(document.getElementById('eventModal')!); // Instancia del modal de eventos
+    this.calendar.render();
+    this.modal = new Modal(document.getElementById('eventModal')!);
+    
+    // Fuerza un cálculo inicial del tamaño
+    setTimeout(() => this.calendar.updateSize(), 0);
   }
 
-  // Obtiene los eventos desde el localStorage
+  // Resto de métodos se mantienen igual...
   getEventsFromStorage(): EventInput[] {
     const storedEvents = localStorage.getItem('calendarEvents');
     return storedEvents ? JSON.parse(storedEvents) : [];
   }
 
-  // Guarda los eventos en localStorage
   saveEventsToStorage(events: EventInput[]) {
     localStorage.setItem('calendarEvents', JSON.stringify(events));
   }
 
-  // Abre el modal para crear un nuevo evento
   openNewEventModal() {
     this.selectedEvent = null;
-    this.resetForm(); // Limpia formulario
-    this.eventDate = this.calendar.getDate().toISOString().split('T')[0]; // Fecha seleccionada
-    this.modal.show(); // Muestra el modal
+    this.resetForm();
+    this.eventDate = this.calendar.getDate().toISOString().split('T')[0];
+    this.modal.show();
   }
 
-  // Maneja el clic sobre una fecha vacía
   handleDateClick(info: any) {
-    this.eventDate = info.dateStr; // Asigna la fecha
-    this.openNewEventModal(); // Abre el modal para crear evento
+    this.eventDate = info.dateStr;
+    this.openNewEventModal();
   }
 
-  // Maneja el clic sobre un evento existente
   handleEventClick(info: any) {
-    this.selectedEvent = info.event; // Guarda evento seleccionado
+    this.selectedEvent = info.event;
     this.eventTitle = this.selectedEvent.title;
     this.eventDate = this.selectedEvent.startStr;
     this.eventDescription = this.selectedEvent.extendedProps.description;
     this.eventPriority = this.selectedEvent.extendedProps.priority;
-    this.modal.show(); // Abre modal con datos precargados
+    this.modal.show();
   }
 
-  // Crea o actualiza un evento
   handleEvent() {
     const eventData: EventInput = {
       title: this.eventTitle,
@@ -115,13 +141,12 @@ export class CalendarioComponent implements OnInit {
     };
 
     if (this.selectedEvent) {
-      eventData.id = this.selectedEvent.id; // Mantiene ID si es edición
-      this.selectedEvent.remove(); // Elimina evento anterior
+      eventData.id = this.selectedEvent.id;
+      this.selectedEvent.remove();
     }
 
-    this.calendar.addEvent(eventData); // Agrega nuevo evento
+    this.calendar.addEvent(eventData);
 
-    // Guarda todos los eventos en localStorage
     this.saveEventsToStorage(
       this.calendar.getEvents().map(e => ({
         id: e.id,
@@ -131,23 +156,19 @@ export class CalendarioComponent implements OnInit {
       }))
     );
 
-    this.modal.hide(); // Cierra modal
-    this.resetForm(); // Limpia formulario
+    this.modal.hide();
+    this.resetForm();
   }
 
-  // Solicita confirmación para eliminar evento
   handleDeleteEvent() {
     if (this.selectedEvent) {
-      this.modal.hide(); // Cierra modal de evento
-      this.deleteModal.show(); // Abre modal de confirmación
+      this.modal.hide();
+      this.deleteModal.show();
     }
   }
 
-  // Confirma y elimina el evento seleccionado
   confirmDelete() {
-    this.selectedEvent.remove(); // Elimina evento del calendario
-
-    // Guarda eventos actualizados
+    this.selectedEvent.remove();
     const updatedEvents = this.calendar.getEvents().map(e => ({
       id: e.id,
       title: e.title,
@@ -155,12 +176,10 @@ export class CalendarioComponent implements OnInit {
       extendedProps: e.extendedProps
     }));
     this.saveEventsToStorage(updatedEvents);
-
-    this.deleteModal.hide(); // Cierra modal de confirmación
-    this.resetForm(); // Limpia formulario
+    this.deleteModal.hide();
+    this.resetForm();
   }
 
-  // Limpia campos del formulario
   resetForm() {
     this.eventTitle = '';
     this.eventDate = '';

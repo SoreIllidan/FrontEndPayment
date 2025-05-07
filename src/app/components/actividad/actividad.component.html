@@ -1,242 +1,236 @@
 
- <!-- Tasks Page TAREA -->
- <div class="page-content " id="tasks-page">
-    <div class="content-header">
-      <h1 class="page-title">Actividades</h1>
-      <button class="btn btn-turquoise" data-bs-toggle="modal" data-bs-target="#taskModal" (click)="resetForm()"> 
-        <i class='bx bx-plus '></i> Nueva actividad
-      </button>
-    </div>
+<!-- Tasks Page TAREA -->
+<div class="page-content " id="tasks-page">
+  <div class="content-header">
+    <h1 class="page-title">Actividades</h1>
+    <button class="btn btn-new-activity btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal"> 
+      <i class='bx bx-plus '></i> Nueva actividad
+    </button>
+  </div>
 
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <select class="form-select">
-              <option selected>Estado</option>
-              <option>Pendiente</option>
-              <option>En progreso</option>
-              <option>Completado</option>
-              <option>Cancelado</option>
-            </select>
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <select class="form-select">
+            <option selected>Estado</option>
+            <option>Pendiente</option>
+            <option>En progreso</option>
+            <option>Completado</option>
+            <option>Cancelado</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <select class="form-select ">
+            <option selected>Asignado a</option>
+            <option *ngFor="let data of dataUsuario; let i = index">{{ data.nombre }}</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="date" class="form-control" placeholder="Fecha límite">
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar tarea...">
+            <button class="btn btn-outline-secondary" type="button">
+              <i class='bx bx-search'></i>
+            </button>
           </div>
-          <div class="col-md-3 mb-3">
-            <select class="form-select ">
-              <option selected>Asignado a</option>
-              <option *ngFor="let data of dataUsuario; let i = index">{{ data.nombre }}</option>
-            </select>
-          </div>
-          <div class="col-md-3 mb-3">
-            <input type="date" class="form-control" placeholder="Fecha límite">
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Buscar tarea...">
-              <button class="btn btn-outline-secondary" type="button">
-                <i class='bx bx-search'></i>
-              </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Asignado a</th>
+          <th>Fecha límite</th>
+          <!-- <th>Prioridad</th> -->
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of data; let i = index">
+          <td>{{data.titulo}}</td>
+          <td>{{ data.descripcion | slice:0:20 }}</td>
+          <td>{{ getNombreCompleto(data.id_usuario) }}</td>
+          <td>{{ data.fecha_fin | date: 'yyyy-MM-dd' }}</td>
+          <!-- <td><span class="badge bg-danger">Alta</span></td> -->
+          <td>
+            <span class="badge text-white px-3 py-2 fs-6 badge-background" [ngClass]="getEstadoColor(data.estado)">
+              {{data.estado}}
+            </span>
+          </td>                
+          <td>
+            <button class="btn btn-action" 
+              data-bs-toggle="modal"
+              (click)="poblarModal(data)" 
+              data-bs-target="#updateModal">
+              <i class='bx bx-edit'></i>
+            </button>
+
+            <button class="btn btn-action"><i class='bx bx-check'></i></button>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+                <!-- Task Modal registrar -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header my-custom-header">
+          <h5 class="modal-title header-title" id="taskModalLabel">Nueva actividad</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <form (ngSubmit)="saveActividad()" #formActividad="ngForm">
+            <!-- Título -->
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Título</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="titulo" 
+                name="titulo" 
+                [(ngModel)]="newActividad.titulo" 
+                placeholder="Título de la tarea">
             </div>
-          </div>
+          
+            <!-- Descripción -->
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <textarea 
+                class="form-control" 
+                id="descripcion" 
+                name="descripcion" 
+                rows="3" 
+                [(ngModel)]="newActividad.descripcion" 
+                placeholder="Describe la tarea"></textarea>
+            </div>
+          
+            <!-- Usuario asignado -->
+            <div class="mb-3">
+              <label for="idUsuario" class="form-label">Asignado a</label>
+              <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newActividad.id_usuario">
+                <option [ngValue]="null">Seleccionar</option>
+                <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
+              </select>
+              
+            </div>
+          
+            <!-- Fechas y prioridad -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="fechaFin" class="form-label">Fecha límite</label>
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  id="fechaFin" 
+                  name="fechaFin" 
+                  [(ngModel)]="newActividad.fecha_fin">
+              </div>
+            </div>
+          
+            <!-- Botón -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+          </form>     
         </div>
       </div>
     </div>
-
-    <div class="table-container">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Asignado a</th>
-            <th>Fecha límite</th>
-            <!-- <th>Prioridad</th> -->
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of data; let i = index">
-            <td>{{data.titulo}}</td>
-            <td>{{ data.descripcion | slice:0:20 }}</td>
-            <td>{{ getNombreCompleto(data.id_usuario) }}</td>
-            <td>{{ data.fecha_fin | date: 'yyyy-MM-dd' }}</td>
-            <!-- <td><span class="badge bg-danger">Alta</span></td> -->
-            <td>
-              <span class="badge text-white px-3 py-2 fs-6 badge-background" [ngClass]="getEstadoColor(data.estado)">
-                {{data.estado}}
-              </span>
-            </td>               
-                     
-            <td>
-              <button class="btn btn-action" 
-                data-bs-toggle="modal"
-                (click)="poblarModal(data)" 
-                data-bs-target="#updateModal">
-                <i class='bx bx-edit'></i>
-              </button>
-
-              <button class="btn btn-action"><i class='bx bx-check'></i></button>
-            </td>
-          </tr>
-          
-        </tbody>
-      </table>
-    </div>
-
-                  <!-- Task Modal registrar -->
-    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="taskModalLabel">Nueva actividad</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            
-            <form (ngSubmit)="saveActividad()" #formActividad="ngForm">
-              <!-- Título -->
-              <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  id="titulo" 
-                  name="titulo" 
-                  [(ngModel)]="newActividad.titulo" 
-                  placeholder="Título de la tarea">
-              </div>
-            
-              <!-- Descripción -->
-              <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <textarea 
-                  class="form-control" 
-                  id="descripcion" 
-                  name="descripcion" 
-                  rows="3" 
-                  [(ngModel)]="newActividad.descripcion" 
-                  placeholder="Describe la tarea"></textarea>
-              </div>
-            
-              <!-- Usuario asignado -->
-              <div class="mb-3">
-                <label for="idUsuario" class="form-label">Asignado a</label>
-                <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newActividad.id_usuario">
-                  <option [ngValue]="null">Seleccionar</option>
-                  <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
-                </select>
-                
-              </div>
-            
-              <!-- Fechas y prioridad -->
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="fechaFin" class="form-label">Fecha límite</label>
-                  <input 
-                    type="date" 
-                    class="form-control" 
-                    id="fechaFin" 
-                    name="fechaFin" 
-                    [(ngModel)]="newActividad.fecha_fin">
-                </div>
-              </div>
-            
-              <!-- Botón -->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-turquoise">Guardar</button>
-              </div>
-            </form>
-          
-          </div>
-     
+  </div>       
+  
+  <!-- Task Modal modificar -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Modificar actividad</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      </div>
-    </div>       
-    
-    <!-- Task Modal modificar -->
-    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="taskModalLabel">Modificar actividad</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            
-            <form (ngSubmit)="updateActividad()" #formActividad="ngForm">
-              <!-- Título -->
-              <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  id="titulo" 
-                  name="titulo" 
-                  [(ngModel)]="newActividad.titulo" 
-                  placeholder="Título de la tarea">
-              </div>
-            
-              <!-- Descripción -->
-              <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <textarea 
-                  class="form-control" 
-                  id="descripcion" 
-                  name="descripcion" 
-                  rows="3" 
-                  [(ngModel)]="newActividad.descripcion" 
-                  placeholder="Describe la tarea"></textarea>
-              </div>
-            
-              <!-- Usuario asignado -->
-              <div class="mb-3">
-                <label for="idUsuario" class="form-label">Asignado a</label>
-                <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newActividad.id_usuario">
-                  <option [ngValue]="null">Seleccionar</option>
-                  <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
-                </select>
-                
-              </div>
-            
-              <!-- Fechas y prioridad -->
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="fechaFin" class="form-label">Fecha límite</label>
-                  <input 
-                    type="date" 
-                    class="form-control" 
-                    id="fechaFin" 
-                    name="fechaFin" 
-                    [(ngModel)]="newActividad.fecha_fin">
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="estado" class="form-label">Estado</label>
-                  <select 
-                    class="form-select" 
-                    id="estado" 
-                    name="estado" 
-                    [(ngModel)]="newActividad.estado">
-                    <option value="En progreso">En progreso</option>
-                    <option value="Completado">Completado</option>
-                    <option value="Cancelado">Cancelado</option>
-                  </select>
-                </div>
-
-              </div>
-
-              <!-- Botón -->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-turquoise" >Actualizar</button>
-              </div>
-            </form>
+        <div class="modal-body">
           
-          </div>
-    
-        </div>
-      </div>
-    </div>    
+          <form (ngSubmit)="updateActividad()" #formActividad="ngForm">
+            <!-- Título -->
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Título</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="titulo" 
+                name="titulo" 
+                [(ngModel)]="newActividad.titulo" 
+                placeholder="Título de la tarea">
+            </div>
+          
+            <!-- Descripción -->
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <textarea 
+                class="form-control" 
+                id="descripcion" 
+                name="descripcion" 
+                rows="3" 
+                [(ngModel)]="newActividad.descripcion" 
+                placeholder="Describe la tarea"></textarea>
+            </div>
+          
+            <!-- Usuario asignado -->
+            <div class="mb-3">
+              <label for="idUsuario" class="form-label">Asignado a</label>
+              <select class="form-select" id="idUsuario" name="idUsuario" [(ngModel)]="newActividad.id_usuario">
+                <option [ngValue]="null">Seleccionar</option>
+                <option *ngFor="let data of dataUsuario" [ngValue]="data.id_usuario">{{ data.nombre }}</option>
+              </select>
+              
+            </div>
+          
+            <!-- Fechas y prioridad -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="fechaFin" class="form-label">Fecha límite</label>
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  id="fechaFin" 
+                  name="fechaFin" 
+                  [(ngModel)]="newActividad.fecha_fin">
+              </div>
 
+              <div class="col-md-6 mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select 
+                  class="form-select" 
+                  id="estado" 
+                  name="estado" 
+                  [(ngModel)]="newActividad.estado">
+                  <option value="En progreso">En progreso</option>
+                  <option value="Completado">Completado</option>
+                  <option value="Cancelado">Cancelado</option>
+                </select>
+              </div>
+
+                          </div>
+
+                          <!-- Botón -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-turquoise" >Actualizar</button>
+                          </div>
+                        </form>     
+                      </div> 
+                    </div>
+                  </div>
+                </div>    
 </div>

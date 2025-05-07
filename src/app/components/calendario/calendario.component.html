@@ -1,7 +1,7 @@
 <!-- Calendar Page -->
 <div class="page-content" id="calendar-page">
   <div class="content-header">
-    <h1 class="page-title">Calendarios</h1>
+    <h1 class="page-title titulo-calendario">Calendarios</h1>
     <button class="btn btn-primary new-event-btn" 
       (click)="openNewEventModal()">
       <i class="bi bi-plus-circle"></i> Nuevo Evento
@@ -20,7 +20,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header custom-modal-header my-custom-header text-white">
-        <h5 class="modal-title fw-bold header-title">{{ selectedEvent ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
+        <h5 class="modal-title header-title">{{ selectedEvent ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -31,14 +31,14 @@
             <input type="text" class="form-control" [(ngModel)]="eventTitle" name="title" required>
           </div>
           
-          <div class="mb-3">
+          <!--<div class="mb-3">
             <label class="form-label fw-bold">Prioridad</label>
             <select class="form-select" [(ngModel)]="eventPriority" name="priority">
               <option value="alta">Alta</option>
               <option value="media">Media</option>
               <option value="baja">Baja</option>
             </select>
-          </div>
+          </div> -->
 
           <div class="mb-3">
             <label class="form-label fw-bold">Fecha</label>
@@ -71,7 +71,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <h5 class="modal-title header-title">Confirmar Eliminación</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
