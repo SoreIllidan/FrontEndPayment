@@ -9,6 +9,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class PersonasComponent implements OnInit {
 
+
   usuarios: Usuario[] = [];
   usuariosFiltrados: Usuario[] = [];
 

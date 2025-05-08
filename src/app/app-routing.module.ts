@@ -9,6 +9,7 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
 import { ActividadComponent } from './components/actividad/actividad.component';
 //AGREGADO
 import { PersonasComponent } from './components/personas/personas.component';
+import { ControlHorarioComponent } from './components/control-horario/control-horario.component';
 
 const routes: Routes = [
   
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'proyectos', component:ProyectosComponent},
   {path: 'reportes', component:ReporteComponent},
   {path: 'notificaciones', component:NotificacionesComponent},
-  {path: 'personas', component:PersonasComponent}
+  {path: 'personas', component:PersonasComponent},
+  {path: 'control-horario', component:ControlHorarioComponent}
 
 ];
 

@@ -28,6 +28,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ActividadComponent } from './components/actividad/actividad.component';
 //AGREGADO
 import { PersonasComponent } from './components/personas/personas.component';
+import { ControlHorarioComponent } from './components/control-horario/control-horario.component';
 
 
 
@@ -44,7 +45,8 @@ import { PersonasComponent } from './components/personas/personas.component';
     DashboardComponent,
     ActividadComponent,
     //AGREGADO
-    PersonasComponent
+    PersonasComponent,
+    ControlHorarioComponent
 
   ],
   imports: [

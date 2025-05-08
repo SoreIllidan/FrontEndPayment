@@ -22,6 +22,7 @@
                   placeholder="Buscar usuario..."
                   aria-label="Buscar"
                   aria-describedby="search-addon"
+                  (input)="filtrarUsuarios($event)"
                 />
               </div>
             </div>
@@ -48,7 +49,7 @@
                           <!-- Verificar si fecha_contrato existe antes de mostrarla -->
                           {{ usuario.fecha_contrato ? (usuario.fecha_contrato | date: 'dd/MM/yyyy') : 'No especificada' }}
                         </td>
-                      </tr>
+                    </tr>
 
                 </tbody>
               </table>
