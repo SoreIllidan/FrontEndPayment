@@ -64,6 +64,8 @@ export class CalendarioComponent implements OnInit, OnDestroy {
       timeZone: 'America/Lima',
       firstDay: 1,
       contentHeight: 'auto',
+      aspectRatio: 1.5,       
+      handleWindowResize: true,
       expandRows: true,
       titleFormat: {
         year: 'numeric',
@@ -89,6 +91,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
           this.calendar.updateSize();
         }
       }
+      
     });
     
 
