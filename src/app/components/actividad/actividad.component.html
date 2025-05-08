@@ -20,12 +20,14 @@
             <option>Cancelado</option>
           </select>
         </div>
+        
         <div class="col-md-3 mb-3">
-          <select class="form-select ">
-            <option selected>Asignado a</option>
-            <option *ngFor="let data of dataUsuario; let i = index">{{ data.nombre }}</option>
+          <select class="form-select" (change)="filtrarUsuarios($event)">
+            <option value="" selected>Asignado a</option>
+            <option *ngFor="let data of dataUsuario; let i = index" [value]="data.nombre">{{ data.nombre }}</option>
           </select>
         </div>
+        
         <div class="col-md-3 mb-3">
           <input type="date" class="form-control" placeholder="Fecha límite">
         </div>

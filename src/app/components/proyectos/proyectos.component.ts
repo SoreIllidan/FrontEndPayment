@@ -56,20 +56,52 @@ export class ProyectosComponent implements OnInit {
     });
   }
 
+  calcularProgresoYActualizarProyecto(): void {
+    const total = this.itemsProyecto.length;
+    const completados = this.itemsProyecto.filter(item => item.estado?.trim() === 'Completado').length;
+    const nuevoProgreso = total > 0 ? Math.round((completados / total) * 100) : 0;
+  
+    // Actualiza progreso localmente
+    this.progreso = nuevoProgreso;
+  
+    // Actualiza en objeto del proyecto seleccionado
+    if (this.newProyecto) {
+      this.newProyecto.progreso = nuevoProgreso;
+  
+      this.servicioProyecto.updateProyecto(this.newProyecto).subscribe(() => {
+        console.log('Progreso del proyecto actualizado en BD:', nuevoProgreso);
+      });
+    }
+  }
+  
+
   updateItem(item: any) {
     console.log('ITEM =>', item);
+    let nuevoEstado: string;
+  
+    if (item.estado === 'No Iniciado') {
+      nuevoEstado = 'Iniciado';
+    } else if (item.estado === 'Iniciado') {
+      nuevoEstado = 'Completado';
+    } else {
+      nuevoEstado = item.estado; // o puedes retornar si ya está completado
+    }
+  
     const dto: ActualizarItemDto = {
-      ID_PROYECTO: item.id_proyecto,   // Asegúrate de usar las propiedades correctas
+      ID_PROYECTO: item.id_proyecto,
       ID_ITEMS: item.id_items,
-      NuevoEstado: 'Iniciado'
+      NuevoEstado: nuevoEstado
     };
-
+  
     console.log("DTO =>", dto);
   
-    this.servicioItems.updateEstadoItem(dto).subscribe({
+    this.servicioItems.updateEstadoItem(dto).subscribe({  
       next: res => {
-        Swal.fire('¡Actualizado!', 'Estado cambiado a "Iniciado".', 'success');
-       // this.getItems(); // refresca la lista
+        Swal.fire('¡Actualizado!', `Estado cambiado a "${nuevoEstado}".`, 'success');
+        
+        this.getItemsPorProyecto(this.newProyecto); // recarga items
+        this.calcularProgresoYActualizarProyecto(); // <-- nuevo paso
+
       },
       error: err => {
         Swal.fire('Error', 'No se pudo actualizar el ítem.', 'error');
@@ -77,11 +109,39 @@ export class ProyectosComponent implements OnInit {
     });
   }
 
+  calcularProgreso(): void {
+    const total = this.itemsProyecto.length;
+    const completados = this.itemsProyecto.filter(item => item.estado === 'Completado').length;
+    console.log(`Total: ${total}, Completados: ${completados}`); // ✅ DEBUG
+    this.progreso = total > 0 ? Math.round((completados / total) * 100) : 0;
+  }
+  
+  
+
+  getEstadoButtonClass(estado: string): string {
+    switch (estado) {
+      case 'No Iniciado':
+        return 'btn-info';
+      case 'Iniciado':
+        return 'btn-warning';
+      case 'Completado':
+        return 'btn-success';
+      case 'Cancelado':
+        return 'btn-danger';
+      default:
+        return 'btn-secondary';
+    }
+  }
+  
+
   getItemsPorProyecto(proyecto: Proyecto) {
     this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe(items => {
       this.itemsProyecto = items;
+      console.log('Ítems cargados:', this.itemsProyecto); // ✅ DEBUG
+      this.calcularProgreso(); // ✅ Calcula el progreso cuando se cargan ítems
     });
   }
+  
 
     activarEdicionProgreso() {
       this.modoEdicion = true;

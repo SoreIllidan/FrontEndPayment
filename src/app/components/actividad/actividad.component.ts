@@ -21,6 +21,8 @@ export class ActividadComponent implements OnInit {
   actividades : Actividad [] = [];
   newActividad : Actividad = new Actividad();
 
+  originalData: VistaActividad[] = [];
+
   data: VistaActividad[]=[];
   dataUsuario: Usuario[]=[];
   displayedColumns: string[] = ['titulo', 'descripcion', 'nombre', 'fecha_fin', 'estado'];
@@ -40,9 +42,13 @@ export class ActividadComponent implements OnInit {
     return usuario ? `${usuario.nombre} ${usuario.apellido}` : 'Sin asignar';
   }
   
-  getAll(){
-    this.servicio.getAll().subscribe(x => this.data = x);
+  getAll() {
+    this.servicio.getAll().subscribe(x => {
+      this.data = x;
+      this.originalData = x; // Guardamos la copia original
+    });
   }
+  
 
   getAllUsuario(){
     this.servicioUsuario.getAll().subscribe(x => this.dataUsuario = x);
@@ -65,6 +71,22 @@ export class ActividadComponent implements OnInit {
   onSubmit() {
     this.saveActividad();
   }
+
+  filtrarUsuarios(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    console.log('Usuario seleccionado:', selectedValue);
+  
+    if (selectedValue === '') {
+      this.data = [...this.originalData]; // sin filtro
+    } else {
+      this.data = this.originalData.filter(a => {
+        const usuario = this.dataUsuario.find(u => u.id_usuario === a.id_usuario);
+        return usuario && usuario.nombre === selectedValue;
+      });
+    }
+  }
+  
+  
 
   getEstadoColor(estado: string): string {
     switch (estado) {

@@ -40,9 +40,16 @@
                 <span>{{ data.progreso }}%</span>
               </div>
               <div class="progress">
-                <div class="progress-bar"role="progressbar" [style.width]="data.progreso + '%'" [attr.aria-valuenow]="data.progreso" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar"
+                     role="progressbar"
+                     [style.width]="data.progreso + '%'"
+                     [attr.aria-valuenow]="progreso"
+                     aria-valuemin="0"
+                     aria-valuemax="100">
+                </div>
               </div>
             </div>
+            
 
             <div class="d-flex justify-content-between align-items-center">
               <div>
@@ -156,10 +163,16 @@
           
           <div class="d-flex justify-content-between mb-1">
             <span>Progreso</span>
-            <span>0 %</span>
+            <span>{{ newProyecto.progreso }}%</span>
           </div>
           <div class="progress">
-            <div class="progress-bar"role="progressbar"  aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar"
+                 role="progressbar"
+                 [style.width]="newProyecto.progreso + '%'"
+                 [attr.aria-valuenow]="newProyecto.progreso"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+            </div>
           </div>
         </div>
         <div class="mb-3">
@@ -234,7 +247,13 @@
         
                 <!-- Botones de acción -->
                 <div class="mt-2 mt-md-0">
-                  <button class="btn btn-sm btn-primary me-2" (click)="updateItem(item)">Editar</button>
+                  <button 
+                    class="btn btn-sm me-2"
+                    [ngClass]="getEstadoButtonClass(item.estado)"
+                    (click)="updateItem(item)">
+                    {{ item.estado }}
+                  </button>
+
                   <button class="btn btn-sm btn-danger" title="Eliminar" (click)="removeItem(i)">
                     <i class="bi bi-trash"></i>
                   </button>
