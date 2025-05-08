@@ -67,7 +67,7 @@ export class ProyectosComponent implements OnInit {
     // Actualiza en objeto del proyecto seleccionado
     if (this.newProyecto) {
       this.newProyecto.progreso = nuevoProgreso;
-  
+      console.log('ID Proyecto a actualizar:', this.newProyecto.id_proyecto);
       this.servicioProyecto.updateProyecto(this.newProyecto).subscribe(() => {
         console.log('Progreso del proyecto actualizado en BD:', nuevoProgreso);
       });
@@ -99,8 +99,9 @@ export class ProyectosComponent implements OnInit {
       next: res => {
         Swal.fire('¡Actualizado!', `Estado cambiado a "${nuevoEstado}".`, 'success');
         
-        this.getItemsPorProyecto(this.newProyecto); // recarga items
-        this.calcularProgresoYActualizarProyecto(); // <-- nuevo paso
+        this.getItemsPorProyecto(this.newProyecto, () => {
+          this.calcularProgresoYActualizarProyecto(); // <-- solo después de recargar los ítems
+        });
 
       },
       error: err => {
@@ -134,13 +135,15 @@ export class ProyectosComponent implements OnInit {
   }
   
 
-  getItemsPorProyecto(proyecto: Proyecto) {
-    this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe(items => {
+  getItemsPorProyecto(proyecto: any, callback?: () => void): void {
+    this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe((items) => {
       this.itemsProyecto = items;
-      console.log('Ítems cargados:', this.itemsProyecto); // ✅ DEBUG
-      this.calcularProgreso(); // ✅ Calcula el progreso cuando se cargan ítems
+      console.log('Ítems cargados:', this.itemsProyecto); 
+      this.calcularProgresoYActualizarProyecto(); // ✅ actualiza en BD también
+      if (callback) callback();
     });
   }
+  
   
 
     activarEdicionProgreso() {
