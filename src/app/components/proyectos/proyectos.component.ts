@@ -97,7 +97,7 @@ export class ProyectosComponent implements OnInit {
   
     this.servicioItems.updateEstadoItem(dto).subscribe({  
       next: res => {
-        Swal.fire('¡Actualizado!', `Estado cambiado a "${nuevoEstado}".`, 'success');
+        // Swal.fire('¡Actualizado!', `Estado cambiado a "${nuevoEstado}".`, 'success');
         
         this.getItemsPorProyecto(this.newProyecto, () => {
           this.calcularProgresoYActualizarProyecto(); // <-- solo después de recargar los ítems

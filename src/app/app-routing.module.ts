@@ -10,6 +10,7 @@ import { ActividadComponent } from './components/actividad/actividad.component';
 //AGREGADO
 import { PersonasComponent } from './components/personas/personas.component';
 import { ControlHorarioComponent } from './components/control-horario/control-horario.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'notificaciones', component:NotificacionesComponent},
   {path: 'personas', component:PersonasComponent},
   {path: 'control-horario', component:ControlHorarioComponent},
+  { path: '**', redirectTo: '' },
 
 ];
 
