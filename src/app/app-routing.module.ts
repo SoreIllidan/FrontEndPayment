@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'reportes', component:ReporteComponent},
   {path: 'notificaciones', component:NotificacionesComponent},
   {path: 'personas', component:PersonasComponent},
-  {path: 'control-horario', component:ControlHorarioComponent}
+  {path: 'control-horario', component:ControlHorarioComponent},
 
 ];
 
@@ -29,4 +29,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

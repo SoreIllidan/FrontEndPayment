@@ -152,9 +152,11 @@ export class ProyectosComponent implements OnInit {
     }
 
     cerrarModal() {
+
       this.modoEdicion = false;
       this.mostrarBotonModificar = false;
       this.itemsProyecto = []; // <-- Limpiar ítems al cerrar el modal
+      this.getAll();
     }
     
   poblarModal(proyectos: Proyecto): void {

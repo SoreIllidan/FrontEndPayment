@@ -13,7 +13,12 @@ export class PersonasComponent implements OnInit {
   usuarios: Usuario[] = [];
   usuariosFiltrados: Usuario[] = [];
 
-    
+   // Bandera para mostrar la tabla de personas
+   mostrarTablaPersonas: boolean = true;
+
+   // Bandera para mostrar las horas de trabajo
+   mostrarHorasTrabajo: boolean = false;
+
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
@@ -31,6 +36,18 @@ export class PersonasComponent implements OnInit {
         u.correo_electronico.toLowerCase().includes(texto) ||
         (u.fecha_contrato && u.fecha_contrato.toString().includes(texto))
     );
+  }
+
+   // Mostrar la tabla de personas
+   mostrarPersonas(): void {
+    this.mostrarTablaPersonas = true;
+    this.mostrarHorasTrabajo = false;
+  }
+
+  // Mostrar las horas de trabajo
+  mostrarHoras(): void {
+    this.mostrarTablaPersonas = false;
+    this.mostrarHorasTrabajo = true;
   }
 
 }
