@@ -5,10 +5,12 @@ export interface Usuario {
     direccion: string;
     correo_electronico: string;
     telefono: string;
-    fecha_contrato?: Date;
+    fecha_contrato?: string;
     cargo: string;
     id_area: number;
     estado?: boolean;
+    user?:string;
+    password?:string;
     //---------------------BORRAR CREAR TABLA HORAS TRABAJO----------------------------
     horas_trabajo?: string; // Aquí agregas la propiedad horas_trabajo
     fecha?: Date | null;
