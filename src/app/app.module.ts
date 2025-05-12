@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +31,8 @@ import { PersonasComponent } from './components/personas/personas.component';
 import { ControlHorarioComponent } from './components/control-horario/control-horario.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
+
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -67,7 +69,9 @@ import { MenuComponent } from './components/menu/menu.component';
     MatToolbarModule,
     MatListModule,
     MatTableModule,
-    FormsModule
+    FormsModule,
+    NgApexchartsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

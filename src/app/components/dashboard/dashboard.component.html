@@ -54,16 +54,17 @@
         </div>
   
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" (click)="navegarATareasEnProgreso()">
             <div class="card dashboard-card">
-              <div class="card-body">
-                <div class="card-icon">
-                  <i class='bx bx-task'></i>
-                </div>
-                <div class="card-value">12</div>
-                <div class="card-label">Tareas pendientes</div>
+            <div class="card-body">
+              <div class="card-icon">
+                <i class='bx bx-task'></i>
               </div>
+              <div class="card-value">{{ tareasPendientes }}</div> <!-- Aquí mostramos el contador -->
+              <div class="card-label">Tareas pendientes</div>
             </div>
+          </div>
+
           </div>
           <div class="col-md-4">
             <div class="card dashboard-card teal">
@@ -76,13 +77,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" (click)="navegarAProyectosEnProgreso()" >
             <div class="card dashboard-card">
               <div class="card-body">
                 <div class="card-icon">
                   <i class='bx bx-briefcase'></i>
                 </div>
-                <div class="card-value">7</div>
+                <div class="card-value">{{ proyectoPendientes }}</div>
                 <div class="card-label">Proyectos en progreso</div>
               </div>
             </div>
@@ -94,7 +95,7 @@
             <div class="card">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Actividades recientes</h5>
-                <button class="btn btn-sm btn-primary"  routerLink="/actividades" routerLinkActive="active">Ver todas</button>
+                <button class="btn btn-sm btn-primary"  routerLink="/menu/actividades" routerLinkActive="active">Ver todas</button>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

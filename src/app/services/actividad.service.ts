@@ -4,6 +4,9 @@ import { Actividad } from '../models/Actividad';
 import { Observable } from 'rxjs';
 import { VistaActividad } from '../models/VistaActividad';
 
+import { map } from 'rxjs/operators';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +24,12 @@ export class ActividadService {
 
     getAllActividad():Observable<Actividad[]>{
       return this.http.get<Actividad[]>(this.url);
+    }
+
+    getCountPendiente(): Observable<number> {
+      return this.http.get<Actividad[]>(`${this.urlActividad}/pendiente`).pipe(
+        map((actividades: Actividad[]) => actividades.length)
+      );
     }
 
     saveActividad(actividad: Actividad): Observable<Object>{

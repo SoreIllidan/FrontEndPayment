@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Actividad } from 'src/app/models/Actividad';
 import { Usuario } from 'src/app/models/Usuario';
 import { VistaActividad } from 'src/app/models/VistaActividad';
@@ -29,13 +29,30 @@ export class ActividadComponent implements OnInit {
 
   constructor(private servicio: ActividadService, 
               private servicioUsuario: UsuarioService,
-              private enrutador : Router
+              private enrutador : Router,
+              private route: ActivatedRoute
             ) { }
 
   ngOnInit(): void {
     this.getAll();
     this.getAllUsuario();
+
+    this.route.queryParams.subscribe(params => {
+    const estadoFiltro = params['estado'];
+
+    this.servicio.getAll().subscribe(x => {
+      this.originalData = x;
+
+      if (estadoFiltro) {
+        this.data = this.originalData.filter(a => a.estado === estadoFiltro);
+      } else {
+        this.data = [...this.originalData]; // sin filtro
+      }
+    });
+  });
   }
+
+  
 
   getNombreCompleto(id_usuario: number): string {
     const usuario = this.dataUsuario.find(u => u.id_usuario === id_usuario);
@@ -72,6 +89,19 @@ export class ActividadComponent implements OnInit {
     this.saveActividad();
   }
 
+filtrarPorEstado(event: Event) {
+  const selectedEstado = (event.target as HTMLSelectElement).value;
+  console.log('Estado seleccionado:', selectedEstado);
+
+  if (selectedEstado === '') {
+    this.data = [...this.originalData]; // sin filtro
+  } else {
+    this.data = this.originalData.filter(a => a.estado === selectedEstado);
+  }
+}
+
+
+
   filtrarUsuarios(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
     console.log('Usuario seleccionado:', selectedValue);
@@ -85,7 +115,23 @@ export class ActividadComponent implements OnInit {
       });
     }
   }
-  
+filtrarUsuariosSelect(event: any): void {
+  const texto = event.target.value.toLowerCase();
+
+  // Filtra los usuarios basándose en nombre, descripción y fechas
+  this.data = this.originalData.filter((u) => {
+    const fechaInicio = u.fecha_inicio ? u.fecha_inicio.toString().toLowerCase() : '';
+    const fechaFin = u.fecha_fin ? u.fecha_fin.toString().toLowerCase() : '';
+
+    return (
+      u.nombre.toLowerCase().includes(texto) ||
+      u.descripcion.toLowerCase().includes(texto) ||
+      fechaInicio.includes(texto) ||
+      fechaFin.includes(texto)
+    );
+  });
+}
+
   
 
   getEstadoColor(estado: string): string {
