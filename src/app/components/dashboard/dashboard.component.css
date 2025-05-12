@@ -421,3 +421,7 @@
     text-align: center;  /* Centra el texto dentro del fondo */
     display: inline-block; /* Asegura que el fondo se ajuste al contenido */
   }
+
+  .turquesa{
+    background-color: #e8e9ff;
+  }

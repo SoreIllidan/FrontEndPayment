@@ -92,28 +92,28 @@
   
         <div class="row mt-4">
           <div class="col-md-8">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card turquesa">
+              <div class="card-header turquesa d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Actividades recientes</h5>
                 <button class="btn btn-sm btn-primary"  routerLink="/menu/actividades" routerLinkActive="active">Ver todas</button>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
+                <div class="table-responsive turquesa">
+                  <table class="table table-hover ">
                     <thead>
                       <tr>
-                        <th>Título</th>
-                        <th>Asignado a</th>
-                        <th>Fecha límite</th>
-                        <th>Estado</th>
+                        <th class="turquesa">Título</th>
+                        <th class="turquesa">Asignado a</th>
+                        <th class="turquesa">Fecha límite</th>
+                        <th class="turquesa">Estado</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let data of data | slice:0:4; let i = index">
-                        <td>{{data.titulo}}</td>
-                        <td>{{data.nombre + " " + data.apellido}}</td>
-                        <td>{{ data.fecha_fin | date: 'yyyy-MM-dd' }}</td>
-                        <td>
+                        <td class="turquesa">{{data.titulo}}</td>
+                        <td class="turquesa">{{data.nombre + " " + data.apellido}}</td>
+                        <td class="turquesa">{{ data.fecha_fin | date: 'yyyy-MM-dd' }}</td>
+                        <td class="turquesa">
                           <span class="badge text-white px-3 py-2 fs-6 badge-background" [ngClass]="getEstadoColor(data.estado)">
                             {{data.estado}}
                           </span>
@@ -127,24 +127,24 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-header">
+          <div class="col-md-4 ">
+            <div class="card turquesa">
+              <div class="card-header turquesa">
                 <h5 class="mb-0">Eventos próximos</h5>
               </div>
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
-                  <div class="bg-primary text-white rounded p-2 text-center me-3" style="width: 45px;">
+                  <div class="bg-primary text-white rounded p-2 text-center me-3 " style="width: 45px;">
                     <div class="small">MAY</div>
                     <div class="fw-bold">18</div>
                   </div>
                   <div>
-                    <h6 class="mb-1">Reunión de equipo</h6>
+                    <h6 class="mb-1 ">Reunión de equipo</h6>
                     <div class="small text-muted">9:30 - 11:00</div>
                   </div>
                 </div>
                 <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
-                  <div class="bg-secondary text-white rounded p-2 text-center me-3" style="width: 45px;">
+                  <div class="bg-secondary text-white rounded p-2 text-center me-3 " style="width: 45px;">
                     <div class="small">MAY</div>
                     <div class="fw-bold">20</div>
                   </div>
@@ -153,10 +153,10 @@
                     <div class="small text-muted">14:00 - 15:30</div>
                   </div>
                 </div>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center turquesa">
                   <div class="bg-primary text-white rounded p-2 text-center me-3" style="width: 45px;">
                     <div class="small">MAY</div>
-                    <div class="fw-bold">22</div>
+                    <div class="fw-bold ">22</div>
                   </div>
                   <div>
                     <h6 class="mb-1">Entrega de informe</h6>
