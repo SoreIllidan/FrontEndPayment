@@ -25,7 +25,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(133, 81, 201, 0.199);
+  background-color: white;/* background-color: rgba(133, 81, 201, 0.199); */
   color: var(--primary);
   margin-right: 5px;
 }
@@ -49,4 +49,39 @@
 #eventModal .btn-success {
   background-color: #4fad6b; 
   border-color: #4fad6b;
+}
+
+/* Estilo general para el fondo */
+.turquesa {
+  background-color: #e8e9ff !important;
+}
+
+/* Ajuste para que el texto largo en celdas no se corte */
+td.turquesa {
+  word-wrap: break-word;
+  white-space: normal;
+  vertical-align: middle;
+  text-align: center; /* Centrar contenido */
+}
+
+/* Encabezado de tabla centrado */
+th.turquesa {
+  text-align: center;
+}
+
+/* Centrado completo de la tabla */
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.table-container table {
+  width: 100%;
+  max-width: 1200px; /* Ajusta según tu diseño */
+  table-layout: auto;
+}
+
+/* Opcional: limitar el ancho de la columna Descripción */
+td.turquesa.descripcion-columna {
+  max-width: 300px;
 }

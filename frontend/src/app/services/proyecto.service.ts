@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Proyecto } from '../models/Proyecto';
 import { Observable } from 'rxjs';
 import { ItemsProyecto } from '../models/ItemsProyecto';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class ProyectoService {
   getAll():Observable<Proyecto[]>{
         return this.http.get<Proyecto[]>(this.urlProyecto);
   }
+
+   getCountPendiente(): Observable<number> {
+        return this.http.get<Proyecto[]>(`${this.urlProyecto}/pendiente`).pipe(
+          map((actividades: Proyecto[]) => actividades.length)
+        );
+      }
   
   saveProyecto(proyecto: Proyecto): Observable<Object>{
         return this.http.post(this.urlProyecto, proyecto);

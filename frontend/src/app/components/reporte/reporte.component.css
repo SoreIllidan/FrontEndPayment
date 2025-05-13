@@ -10,6 +10,7 @@
   }
   
   body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light);
     color: #333;
     transition: var(--transition);
@@ -409,4 +410,12 @@
     .mobile-nav {
       display: flex;
     }
+  }
+  #chart1 {
+    max-width: 650px;
+    margin: 35px auto;
+  }
+  #chart2 {
+    max-width: 450px;
+    margin: 35px auto;
   }

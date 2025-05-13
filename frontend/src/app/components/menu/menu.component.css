@@ -3,6 +3,7 @@
   background-color: #e8e9ff;
   border-radius: 10px;
   border: none;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /*Fuente*/
 }
 .menu-label {
   color: #000000 !important;
@@ -13,37 +14,19 @@
   border: none;
 }
 
-.main-content{
-  padding-left: 200px;
-  margin: 0 auto; /* Centra si tiene ancho fijo */
-  max-width: 100%; /* Asegura que use todo el ancho disponible */
-}
-
-.dropdown {
-  margin-left:auto;
-}
-
-/* Notification dropdown */
-.notification-dropdown {
-  width: 250px; /* Ajusta el ancho que quieras */
-  max-width: 90vw; /* Para evitar que se pase en pantallas pequeñas */
-  padding: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  background: white; 
-}
-
 /*Posición del logo Paymen latam*/
-  .logo-container {
-    position: right;
-    background-color: white;
-    padding:  auto;
-    display: flex;
-    align-items: center;
-  }
+.logo-container {
+  position: fixed;
+  background-color: white;
+  padding: 10px 15px;
+  width: 190px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
 
 .logo-img {
-  width: 180px; /*Tamaño del logo*/
+  width: 200px; /*Tamaño del logo*/
   height: auto;
 }
 
@@ -82,18 +65,17 @@
 .topbar {
   position: fixed;
   top: 0;
-  left: 0px; /* mismo ancho que sidebar */
+  left: 250px; /* mismo ancho que el sidebar */
   right: 0;
-  height: 70px;
-  background-color: #ffffff;
+  height: 80px;
+  background-color: #fff;
+  z-index: 1000;
   display: flex;
+  justify-content: flex-end; /* contenido alineado a la derecha */
   align-items: center;
-  padding: 0 20px; /* espacio interno a los lados */
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  z-index: 1030; /* Asegura que esté sobre otros elementos */
-  overflow: visible; /* Muy importante */
+  padding: 0 20px;
+  border-bottom: 1px solid #ccc;
 }
-
 
 /* Nombre del usuario con fuente más grande */
 .user-info span.fw-bold {
@@ -104,24 +86,6 @@
 .scroll {
   margin-top: 60px; /* misma altura que topbar */
   height: calc(100vh - 60px);
-  overflow-y: hidden;
+  overflow-y: auto;
   padding: 20px;
-}
-
-@media (max-width: 992px) {
-  .topbar {
-    left: 0; /* sidebar desaparece o se esconde en móviles */
-  }
-}
-
-.mb-0{
-  font-size: 16px !important;
-}
-
-.notification-dropdown.dropdown-menu {
-  font-size:  16px !important;
-  z-index: 1050;
-  width: 400px; 
-  max-height: 400px; 
-  overflow-y: auto; 
 }
