@@ -78,7 +78,7 @@
   overflow-x: auto;
 
   /* 🎯 Estilos del borde en el contenedor */
-  border: 1px solid #a5a6ff;
+  /* border: 1px solid #a5a6ff; */
   border-radius: 15px;
   background-color: #e8e9ff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
