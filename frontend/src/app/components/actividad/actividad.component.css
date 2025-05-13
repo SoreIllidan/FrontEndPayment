@@ -1,12 +1,14 @@
-
+/* Título principal */
 .page-title {
   font-weight: bold;
 }
-/*Simetria de elementos pendiente, en progreso, completo, etc*/
+
+/* Simetría de la etiqueta de estado */
 .badge-background {
-  width: 150px;  /* Ancho fijo */
+  width: 150px;
 }
 
+/* Botón "Nueva Tarea" */
 .btn-new-activity {
   background-color: #a765fe !important;
   border-color: #a765fe !important;
@@ -17,7 +19,7 @@
   border-color: #8551c9 !important;
 }
 
-/*Formato y color btn acciones*/
+/* Botones de acciones (editar, check) */
 .btn-action {
   width: 36px;
   height: 36px;
@@ -25,7 +27,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: white;/* background-color: rgba(133, 81, 201, 0.199); */
+  background-color: rgb(255, 255, 255);
   color: var(--primary);
   margin-right: 5px;
 }
@@ -35,53 +37,98 @@
   color: var(--white);
 }
 
-/*Modal*/
+/* Título en modal */
 .header-title {
-  font-size: 1.1rem; /* Tamaño del texto del header */
-  font-weight: bold; /* Negrita */
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
-/*Header Color*/
+/* Header del modal personalizado */
 .my-custom-header {
-  background-color: #a765fe; /* Color headear btn-nuevo-evento*/
+  background-color: #a765fe;
 }
 
+/* Botón verde del modal "Guardar" */
 #eventModal .btn-success {
-  background-color: #4fad6b; 
+  background-color: #4fad6b;
   border-color: #4fad6b;
 }
 
-/* Estilo general para el fondo */
-.turquesa {
-  background-color: #e8e9ff !important;
+/* Botón "Actualizar" */
+.btn-turquoise {
+  background-color: #4cbecf;
+  color: white;
+  border: none;
 }
 
-/* Ajuste para que el texto largo en celdas no se corte */
-td.turquesa {
-  word-wrap: break-word;
-  white-space: normal;
-  vertical-align: middle;
-  text-align: center; /* Centrar contenido */
+.btn-turquoise:hover {
+  background-color: #38a7b6;
+  color: white;
 }
 
-/* Encabezado de tabla centrado */
-th.turquesa {
-  text-align: center;
-}
-
-/* Centrado completo de la tabla */
+/* Contenedor de la tabla centrado y ancho igual a .card-body */
 .table-container {
   display: flex;
   justify-content: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: auto;
+
+  /* 🎯 Estilos del borde en el contenedor */
+  border: 1px solid #a5a6ff;
+  border-radius: 15px;
+  background-color: #e8e9ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+  
+/* Tabla principal */
 .table-container table {
   width: 100%;
-  max-width: 1200px; /* Ajusta según tu diseño */
+  max-width: 100%;
   table-layout: auto;
+  background-color: transparent; /* ← Fondo ya está en el contenedor */
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-/* Opcional: limitar el ancho de la columna Descripción */
-td.turquesa.descripcion-columna {
-  max-width: 300px;
+/* Encabezados */
+th.turquesa {
+  text-align: center;
+  padding: 15px;
+  border-bottom: 2px solid #a5a6ff;
+}
+
+/* Centrado del encabezado de acciones */
+th.turquesa:last-child {
+  text-align: center;
+}
+
+/* Celdas del cuerpo */
+td.turquesa {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid #a6a6f0;
+}
+
+/* Última fila sin borde inferior */
+.table-container table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Evita bordes internos dobles */  
+.table-container table th:first-child,
+.table-container table td:first-child {
+  border-left: none;
+}
+.table-container table th:last-child,
+.table-container table td:last-child {
+  border-right: none;
+}
+.turquesa {
+  background-color: #e8e9ff;
 }
