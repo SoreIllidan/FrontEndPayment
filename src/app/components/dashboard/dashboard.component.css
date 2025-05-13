@@ -11,7 +11,6 @@
   }
   
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light);
     color: #333;
     transition: var(--transition);
@@ -22,7 +21,7 @@
   .sidebar {
     background-color: var(--white);
     border-right: 1px solid rgba(0,0,0,0.1);
-    height: 100vh;
+    height:auto;
     position: fixed;
     width: 240px;
     z-index: 999;
@@ -97,7 +96,7 @@
   .main-content {
     margin-left: 240px;
     padding: 20px;
-    min-height: 100vh;
+    min-height: auto;
     transition: var(--transition);
   }
   
@@ -105,14 +104,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 2px;
   }
   
-  .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--dark);
-  }
   
   /* Cards */
   .card {
@@ -121,7 +115,7 @@
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     border: none;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
   }
   
   .card:hover {
@@ -129,9 +123,9 @@
   }
   
   .card-header {
-    background-color: transparent;
     border-bottom: 1px solid rgba(0,0,0,0.1);
     font-weight: 600;
+    background-color: #e8e9ff !important;
   }
   
   .dashboard-card {
@@ -140,10 +134,15 @@
   
   .dashboard-card .card-body {
     padding: 20px;
+    font-size: 16px !important;
   }
   
-  .dashboard-card.teal {
-    border-top-color: var(--secondary);
+  .dashboard-card.teal  {
+    border-top-color: #a765fe;
+  }
+
+  .turquoise{
+    border-top-color: #04bac0;
   }
   
   .card-icon {
@@ -177,7 +176,6 @@
   
   /* Table */
   .table-container {
-    background-color: var(--white);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 20px;
@@ -185,7 +183,6 @@
   
   .table th {
     font-weight: 600;
-    color: var(--dark);
     border-bottom-width: 1px;
   }
   
@@ -351,12 +348,6 @@
     border-radius: var(--border-radius);
   }
   
-  /* Notification dropdown */
-  .notification-dropdown {
-    min-width: 320px;
-    padding: 0;
-  }
-  
   .notification-header {
     display: flex;
     justify-content: space-between;
@@ -405,7 +396,7 @@
     
     .main-content {
       margin-left: 0;
-      padding-bottom: 70px;
+      padding-bottom: 1px;
     }
     
     .mobile-nav {
@@ -415,6 +406,7 @@
     
   }
 
+
   .badge-background {
     background-color: #dc3545; /* Color de fondo, puedes cambiarlo por el color que desees */
     width: 150px;  /* Ancho fijo */
@@ -422,6 +414,164 @@
     display: inline-block; /* Asegura que el fondo se ajuste al contenido */
   }
 
-  .turquesa{
-    background-color: #e8e9ff;
-  }
+.card-container {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  width:100%;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-value {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #2c2c2c;
+}
+
+.card-label {
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-icon {
+  background-color: #e5d5ff;
+  color: #a765fe;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-icon {
+  background-color: #e5d5ff;
+  color: #a765fe;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.turquoise {
+  color: #04bac0;
+}
+
+.mb-0 {
+  font-size: 16px !important;
+}
+
+
+.mb-1 {
+  font-size: 12px !important;
+}
+
+.small text-muted {
+  font-size: 12px !important;
+}
+
+.card-event {
+  max-width: 250px; /* que aproveche todo el ancho de su columna */
+  height: 100%;     /* crecer según contenido */
+  border-radius: 10px;
+  background-color: #e8e9ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Asegura que solo se vean 3 eventos como máximo sin scroll */
+.card-event .event-item {
+  margin-bottom: 10px;
+}
+
+/* Contenedor interno que limita la altura total */
+.card-event-content {
+  max-height: calc(3 * 80px); /* Asume que cada evento mide unos 80px */
+  overflow-y: auto;
+}
+
+.card-event-content::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  
+}
+
+.table.table-hover,
+.table.table-hover thead ,
+.table.table-hover th ,
+.table.table-hover tbody tr,
+.table.table-hover tbody td {
+  background-color: #e8e9ff !important;
+  font-size: 16px!important;
+}
+
+
+.justify-content-between{
+  background-color: #e8e9ff !important;
+}
+
+.bg-primary {
+  min-width: 50px;
+}
+
+.bg-secondary{
+  min-width: 50px;
+}
+
+.card-activity{
+  width: 100%;
+  max-width: 100%;
+}
+
+.col-md-4{
+  position: auto;
+}
+
+/* limita visualmente la altura del body a 3 eventos visibles */
+.card-event .card-body {
+  max-height: 320px; /* ajusta según altura de cada evento */
+  overflow-y: auto;
+  padding-right: 10px; /* espacio para scrollbar */
+}
+
+.card-activity {
+  width: 100%;
+  min-height: 400px; /* Altura mínima para mantener consistencia */
+}
+
+.table-responsive {
+  overflow-x: auto;
+  min-height: 300px;
+}
+
+.table {
+  width: 100% !important;
+  table-layout: auto;
+}
+
+.table th,
+.table td {
+  white-space: nowrap;
+  min-width: 150px; /* Ancho mínimo para las celdas */
+}
+
+.table th:last-child,
+.table td:last-child {
+  min-width: 200px;
+}
+
+
+.table-responsive-lg {
+  overflow-x: auto;
+}
