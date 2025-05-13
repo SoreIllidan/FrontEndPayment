@@ -1,0 +1,52 @@
+
+.page-title {
+  font-weight: bold;
+}
+/*Simetria de elementos pendiente, en progreso, completo, etc*/
+.badge-background {
+  width: 150px;  /* Ancho fijo */
+}
+
+.btn-new-activity {
+  background-color: #a765fe !important;
+  border-color: #a765fe !important;
+}
+
+.btn-new-activity:hover {
+  background-color: #8551c9 !important;
+  border-color: #8551c9 !important;
+}
+
+/*Formato y color btn acciones*/
+.btn-action {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(133, 81, 201, 0.199);
+  color: var(--primary);
+  margin-right: 5px;
+}
+
+.btn-action:hover {
+  background-color: #8551c9 !important;
+  color: var(--white);
+}
+
+/*Modal*/
+.header-title {
+  font-size: 1.1rem; /* Tamaño del texto del header */
+  font-weight: bold; /* Negrita */
+}
+
+/*Header Color*/
+.my-custom-header {
+  background-color: #a765fe; /* Color headear btn-nuevo-evento*/
+}
+
+#eventModal .btn-success {
+  background-color: #4fad6b; 
+  border-color: #4fad6b;
+}

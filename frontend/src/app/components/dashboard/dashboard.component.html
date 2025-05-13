@@ -1,0 +1,134 @@
+<!-- Dashboard Page -->
+<div class="page-content" id="dashboard-page">
+  <div class="content-header">
+    <h1 class="page-title">Dashboard</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-container">
+          <div class="card-content">
+            <div class="card-text">
+              <div class="card-value">12</div>
+              <div class="card-label">Tareas pendientes</div>
+            </div>
+            <div class="card-icon">
+              <i class='bx bx-calendar-check'></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 ">
+      <div class="card dashboard-card turquoise">
+        <div class="card-container">
+          <div class="card-content ">
+            <div class="card-text">
+              <div class="card-value">4</div>
+              <div class="card-label">Eventos próximos</div>
+            </div>
+            <div class="card-icon teal">
+              <i class='bx bx-calendar'></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-container">
+          <div class="card-content">
+            <div class="card-text">
+              <div class="card-value">7</div>
+              <div class="card-label">Proyectos en progreso</div>
+            </div>
+            <div class="card-icon">
+              <i class='bx bx-briefcase'></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-xl-9 col-lg-8 col-md-12 mb-4 mb-xl-0">
+      <div class="card card-activity h-100"> 
+        <div class="card-header d-flex  justify-content-between align-items-center">
+          <h5 class="mb-0">Actividades recientes</h5>
+          <button class="btn btn-sm btn-primary" routerLink="/actividades" routerLinkActive="active">Ver todas</button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive-lg"> 
+              <table class="table table-hover w-100 align-middle">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Asignado a</th>
+                  <th>Fecha límite</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of data | slice:0:4; let i = index">
+                  <td>{{ data.titulo }}</td>
+                  <td>{{ data.nombre + " " + data.apellido }}</td>
+                  <td class="right-center">{{ data.fecha_fin | date: 'dd MMMM yyyy' : 'UTC' : 'es' | lowercase }}</td>
+                  <td>
+                    <span class="badge text-white px-3 py-2 fs-6 badge-background" [ngClass]="getEstadoColor(data.estado)">
+                      {{ data.estado }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-4 col-md-12">
+      <div class="card card-event">
+        <div class="card-header ">
+          <h5 class="mb-0">Eventos próximos</h5>
+        </div>
+        <div class="card-body ">
+          <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+            <div class="bg-primary text-white rounded p-2 text-center me-3" style="width: 45px;">
+              <div class="small">MAY</div>
+              <div class="fw-bold">18</div>
+            </div>
+            <div>
+              <h6 class="mb-1">Reunión de equipo</h6>
+              <div class="small text-muted">9:30 - 11:00</div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+            <div class="bg-secondary text-white rounded p-2 text-center me-3" style="width: 45px;">
+              <div class="small">MAY</div>
+              <div class="fw-bold">20</div>
+            </div>
+            <div>
+              <h6 class="mb-1">Revisión de proyecto</h6>
+              <div class="small text-muted">14:00 - 15:30</div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="bg-primary text-white rounded p-2 text-center me-3" style="width: 45px;">
+              <div class="small">MAY</div>
+              <div class="fw-bold">22</div>
+            </div>
+            <div>
+              <h6 class="mb-1">Entrega de informe</h6>
+              <div class="small text-muted">Todo el día</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

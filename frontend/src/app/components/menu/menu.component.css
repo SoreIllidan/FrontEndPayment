@@ -1,0 +1,127 @@
+/*Colorear tarjeta Dashboard,Actividades,etc*/
+.sidebar  {
+  background-color: #e8e9ff;
+  border-radius: 10px;
+  border: none;
+}
+.menu-label {
+  color: #000000 !important;
+}
+.sidebar-header {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: none;
+}
+
+.main-content{
+  padding-left: 200px;
+  margin: 0 auto; /* Centra si tiene ancho fijo */
+  max-width: 100%; /* Asegura que use todo el ancho disponible */
+}
+
+.dropdown {
+  margin-left:auto;
+}
+
+/* Notification dropdown */
+.notification-dropdown {
+  width: 250px; /* Ajusta el ancho que quieras */
+  max-width: 90vw; /* Para evitar que se pase en pantallas pequeñas */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: white; 
+}
+
+/*Posición del logo Paymen latam*/
+  .logo-container {
+    position: right;
+    background-color: white;
+    padding:  auto;
+    display: flex;
+    align-items: center;
+  }
+
+.logo-img {
+  width: 180px; /*Tamaño del logo*/
+  height: auto;
+}
+
+/*Solo logo*/
+.logo-text {
+  display: none; 
+}
+
+/*Evitar que el logo se superponga con el sidebar */
+.sidebar {
+  margin-top: 80px;/*Distancia entre el logo y el sidebar*/
+}
+
+
+/* Estilo para el botón de toggle (si se usa en pantallas pequeñas) */
+.sidebar-toggle {
+  margin-right: auto; /* Mantiene el botón a la izquierda si se necesita */
+}
+
+/* Estilo para el contenedor de usuario */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Imagen de perfil */
+.profile-img {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+
+/* Topbar alineado a la derecha */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0px; /* mismo ancho que sidebar */
+  right: 0;
+  height: 70px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 20px; /* espacio interno a los lados */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 1030; /* Asegura que esté sobre otros elementos */
+  overflow: visible; /* Muy importante */
+}
+
+
+/* Nombre del usuario con fuente más grande */
+.user-info span.fw-bold {
+  font-size: 1.1rem;
+}
+
+/* Scroll solo en esta sección */
+.scroll {
+  margin-top: 60px; /* misma altura que topbar */
+  height: calc(100vh - 60px);
+  overflow-y: hidden;
+  padding: 20px;
+}
+
+@media (max-width: 992px) {
+  .topbar {
+    left: 0; /* sidebar desaparece o se esconde en móviles */
+  }
+}
+
+.mb-0{
+  font-size: 16px !important;
+}
+
+.notification-dropdown.dropdown-menu {
+  font-size:  16px !important;
+  z-index: 1050;
+  width: 400px; 
+  max-height: 400px; 
+  overflow-y: auto; 
+}

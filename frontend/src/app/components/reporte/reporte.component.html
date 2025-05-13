@@ -1,0 +1,56 @@
+   <!-- Reporte Page -->
+   <div class="page-content" id="reports-page">
+    <div class="content-header">
+      <h1 class="page-title">Reportes</h1>
+    </div>
+    
+    <div class="report-controls">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="form-label">Rango de fechas</label>
+          <div class="input-group">
+            <input type="date" class="form-control" placeholder="Fecha inicial">
+            <span class="input-group-text">a</span>
+            <input type="date" class="form-control" placeholder="Fecha final">
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Proyecto</label>
+          <select class="form-select">
+            <option selected>Todos los proyectos</option>
+            <option>Rediseño del sitio web</option>
+            <option>App móvil</option>
+            <option>Integración CRM</option>
+            <option>Sistema de inventario</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Equipo</label>
+          <select class="form-select">
+            <option selected>Todos los equipos</option>
+            <option>Desarrollo</option>
+            <option>Diseño</option>
+            <option>Marketing</option>
+            <option>Ventas</option>
+          </select>
+        </div>
+        <div class="col-md-2 mb-3 d-flex align-items-end">
+          <button class="btn btn-primary w-100" id="generateReport">Generar</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card position-relative">
+      <div class="card-body" id="reportResult">
+        <div class="text-center py-5">
+          <i class='bx bx-bar-chart-alt-2' style="font-size: 80px; color: #e9ecef;"></i>
+          <p class="text-muted mt-3">Selecciona los parámetros y haz clic en "Generar" para ver el reporte</p>
+        </div>
+      </div>
+      <div class="spinner-overlay d-none" id="reportLoading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </div>

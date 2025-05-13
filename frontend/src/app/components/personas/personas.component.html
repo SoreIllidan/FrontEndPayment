@@ -1,0 +1,107 @@
+<div class="container mt-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-light d-flex  align-items-center border-bottom mb-1">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: mostrarTablaPersonas }"
+            (click)="mostrarPersonas()"
+            href="javascript:void(0)"
+          >Usuario</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="{ active: mostrarHorasTrabajo }"
+            (click)="mostrarHoras()"
+            href="javascript:void(0)"
+          >Control horario</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contenido del cuadro -->
+    <div class="card-body">
+      <!-- Buscador (solo visible cuando se muestra la tabla de personas) -->
+      <div class="row justify-content-start mb-4" *ngIf="mostrarTablaPersonas">
+        <div class="col-md-6">
+          <div class="input-group" style="cursor: pointer;" onclick="document.getElementById('buscarInput').select()">
+            <span class="input-group-text bg-white border-end-0" id="search-addon">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              id="buscarInput"
+              type="search"
+              class="form-control border-start-0"
+              placeholder="Buscar usuario..."
+              aria-label="Buscar"
+              aria-describedby="search-addon"
+              (input)="filtrarUsuarios($event)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Mostrar la tabla de usuarios si 'mostrarTablaPersonas' es verdadero -->
+      <div *ngIf="mostrarTablaPersonas">
+        <div class="table-responsive">
+          <table class="table table-hover custom-table">
+            <thead>
+              <tr>
+                <th class="encabezado col-4">Nombre</th>
+                <th class="encabezado col-4">Email</th>
+                <th class="encabezado col-4">Fecha de contratación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuariosFiltrados">
+                <td class="bodyC p-3">{{ usuario.nombre }}</td>
+                <td class="bodyC p-3">{{ usuario.correo_electronico }}</td>
+                <td class="bodyC p-3">
+                  {{ usuario.fecha_contrato ? (usuario.fecha_contrato | date: 'dd/MM/yyyy') : 'No especificada' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mostrar el horario de trabajo si 'mostrarHorasTrabajo' es verdadero -->
+      <div *ngIf="mostrarHorasTrabajo">
+        <div class="table-responsive">
+          <table class="table table-hover custom-table">
+            <thead>
+              <tr>
+                <th class="encabezado col-md-2">Nombre</th>
+                <th class="encabezado col-md-1">Estado</th>
+                <th class="encabezado col-md-2">Fecha</th>
+                <th class="encabezado col-md-1">Inicio</th>
+                <th class="encabezado col-md-1">Fin</th>
+                <th class="encabezado col-md-2">Horas de Trabajo</th>
+                <th class="encabezado col-md-1">Pausas</th>
+                <th class="encabezado col-md-2">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuariosFiltrados">
+                <td class="bodyC p-3">{{ usuario.nombre }}</td>
+                <td class="bodyC p-3">
+                  <!-- Aquí se muestra las horas de trabajo (asegúrate de que `usuario.horas_trabajo` exista) -->
+                  {{ usuario.estado  || 'No especificado' }}
+                </td>
+                <td class="bodyC p-3">{{ usuario.fecha | date }}</td> 
+                <td class="bodyC p-3">{{ usuario.inicio || '8:00' }}</td> 
+                <td class="bodyC p-3">{{ usuario.fin || '0:00' }}</td> 
+                <td class="bodyC p-3 align-center">{{ usuario.horas_trabajo || '00:00' }}</td>
+                <td class="bodyC p-3">{{ usuario.pausas || '00:00' }}</td>
+                <td class="bodyC p-3">{{ usuario.total_horas || '00:00' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
