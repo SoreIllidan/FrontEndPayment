@@ -1,0 +1,41 @@
+/*Colorear tarjeta Dashboard,Actividades,etc*/
+.sidebar  {
+  background-color: #e8e9ff;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /*Fuente*/
+}
+.menu-label {
+  color: #000000 !important;
+}
+.sidebar-header {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: none;
+}
+
+/*Posición del logo Paymen latam*/
+.logo-container {
+  position: fixed;
+  background-color: white;
+  padding: 10px 15px;
+  width: 190px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 200px; /*Tamaño del logo*/
+  height: auto;
+}
+
+/*Solo logo*/
+.logo-text {
+  display: none; 
+}
+
+/*Evitar que el logo se superponga con el sidebar */
+.sidebar {
+  margin-top: 80px;/*Distancia entre el logo y el sidebar*/
+}

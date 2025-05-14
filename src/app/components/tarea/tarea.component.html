@@ -1,0 +1,189 @@
+
+    <!-- Tasks Page TAREA -->
+    <div class="page-content " id="tasks-page">
+        <div class="content-header">
+          <h1 class="page-title">Tareas</h1>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <i class='bx bx-plus'></i> Nueva tarea
+          </button>
+        </div>
+  
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <select class="form-select">
+                  <option selected>Estado</option>
+                  <option>Pendiente</option>
+                  <option>En progreso</option>
+                  <option>Completado</option>
+                  <option>Cancelado</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <select class="form-select ">
+                  <option selected>Asignado a</option>
+                  <option *ngFor="let data of dataUsuario; let i = index">{{ data.nombre }}</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <input type="date" class="form-control" placeholder="Fecha límite">
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Buscar tarea...">
+                  <button class="btn btn-outline-secondary" type="button">
+                    <i class='bx bx-search'></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="table-container">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="turquesa">Título</th>
+                <th>Descripción</th>
+                <th>Asignado a</th>
+                <th>Fecha límite</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of data; let i = index">
+                <td>{{data.titulo}}</td>
+                <td>{{ data.descripcion | slice:0:20 }}</td>
+                <td>{{data.nombre + " " + data.apellido}}</td>
+                <td>{{ data.fecha_fin | date: 'yyyy-MM-dd' }}</td>
+                <!-- <td><span class="badge bg-danger">Alta</span></td> -->
+                <td>
+                  <span class="badge text-white px-3 py-2 fs-6 badge-background" [ngClass]="getEstadoColor(data.estado)">
+                    {{data.estado}}
+                  </span>
+                </td>               
+                         
+                <td>
+                  
+                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#taskModalEdit" ><i class='bx bx-edit'></i></button>
+                  <button class="btn btn-action"><i class='bx bx-check'></i></button>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
+        <!-- Task Mod   al -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Nueva tarea</h5>
+          <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="taskTitle" class="form-label">Título</label>
+              <input type="text" class="form-control" id="taskTitle" placeholder="Título de la tarea">
+            </div>
+            <div class="mb-3">
+              <label for="taskDescription" class="form-label">Descripción</label>
+              <textarea class="form-control" id="taskDescription" rows="3" placeholder="Describe la tarea"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="taskAssignee" class="form-label">Asignado a</label>
+              <select class="form-select" id="taskAssignee">
+                <option selected>Seleccionar</option>
+                <option>Ana Gómez</option>
+                <option>Carlos Ruiz</option>
+                <option>Laura Torres</option>
+                <option>Miguel Sánchez</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="taskDueDate" class="form-label">Fecha límite</label>
+                <input type="date" class="form-control" id="taskDueDate">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="taskPriority" class="form-label">Prioridad</label>
+                <select class="form-select" id="taskPriority">
+                  <option selected>Seleccionar</option>
+                  <option value="high">Alta</option>
+                  <option value="medium">Media</option>
+                  <option value="low">Baja</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+        <!-- Task Mod   al -->
+        <div class="modal fade" id="taskModalEdit" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="taskModalLabel">Editar tarea</h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="taskTitle" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="taskTitle" placeholder="Título de la tarea">
+                  </div>
+                  <div class="mb-3">
+                    <label for="taskDescription" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="taskDescription" rows="3" placeholder="Describe la tarea"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="taskAssignee" class="form-label">Asignado a</label>
+                    <select class="form-select" id="taskAssignee">
+                      <option selected>Seleccionar</option>
+                      <option>Ana Gómez</option>
+                      <option>Carlos Ruiz</option>
+                      <option>Laura Torres</option>
+                      <option>Miguel Sánchez</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="taskDueDate" class="form-label">Fecha límite</label>
+                      <input type="date" class="form-control" id="taskDueDate">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="taskPriority" class="form-label">Prioridad</label>
+                      <select class="form-select" id="taskPriority">
+                        <option selected>Seleccionar</option>
+                        <option value="high">Alta</option>
+                        <option value="medium">Media</option>
+                        <option value="low">Baja</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
