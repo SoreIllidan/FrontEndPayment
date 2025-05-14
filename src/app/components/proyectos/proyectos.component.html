@@ -107,20 +107,41 @@
           <div class="mb-3">
             <label class="form-label d-flex justify-content-between">
               <span>Ítems del proyecto (mínimo 3)</span>
-              <span>{{ newItems.length }} ítems</span>
+              <span>{{ newItems.length }} ítems </span>
             </label>           
             
-            <div *ngFor="let item of newItems; let i = index; trackBy: trackByIndex" class="mb-2 input-group">
-              <input type="text" class="form-control"
-                     [(ngModel)]="newItems[i]"
-                     [name]="'item_' + i"
-                     placeholder="Descripción del ítem"
-                     required >
-              <button type="button" class="btn btn-danger" (click)="removeItem(i)">
-                <i class="bi bi-trash"></i>
-              </button>
+            <div *ngFor="let item of newItems; let i = index; trackBy: trackByIndex" class="row align-items-end mb-3">
+              <!-- Campo de descripción -->
+              <div class="col-md-5">
+                <input 
+                  type="text" 
+                  class="form-control"
+                  [(ngModel)]="item.descripcion"
+                  [name]="'item_descripcion_' + i"
+                  placeholder="Descripción del ítem"
+                  required
+                >
+              </div>
+
+              <!-- Campo de fecha límite -->
+              <div class="col-md-5">
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  [name]="'fechaLimite_' + i" 
+                  [(ngModel)]="item.fecha_limite"
+                  required
+                >
+              </div>
+
+              <!-- Botón para eliminar -->
+              <div class="col-md-2">
+                <button type="button" class="btn btn-danger w-100" (click)="removeItem(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
             </div>
-            
+
           
             <div class="text-muted small mb-2 mt-3">
               El porcentaje de progreso se calcula automáticamente en base a los ítems completados.
