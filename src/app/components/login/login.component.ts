@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   login() {
   this.usuarioService.getAll().subscribe((usuarios: Usuario[]) => {
-    const usuarioValido = usuarios.find(usuario => usuario.user === this.email && usuario.password === this.password);
+    const usuarioValido = usuarios.find(usuario => usuario.username === this.email && usuario.password === this.password);
 
     if (usuarioValido) {
       this.loginError = false;

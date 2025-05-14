@@ -9,7 +9,7 @@ export interface Usuario {
     cargo: string;
     id_area: number;
     estado?: boolean;
-    user?:string;
+    username?:string;
     password?:string;
     //---------------------BORRAR CREAR TABLA HORAS TRABAJO----------------------------
     horas_trabajo?: string; // Aquí agregas la propiedad horas_trabajo
