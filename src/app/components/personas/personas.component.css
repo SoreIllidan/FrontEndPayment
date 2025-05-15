@@ -28,7 +28,9 @@
   .bodyC{
     background-color: #e8e9ff ;
   }
-
-
-
-  
+  .content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
