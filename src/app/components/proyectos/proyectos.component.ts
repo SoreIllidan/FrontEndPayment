@@ -2,18 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActualizarItemDto } from 'src/app/models/ActualizarItemDto';
 import { ItemsProyecto } from 'src/app/models/ItemsProyecto';
 import { Proyecto } from 'src/app/models/Proyecto';
-
-
 import { Usuario } from 'src/app/models/Usuario';
 import { ItemsProyectoService } from 'src/app/services/items-proyecto.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
-
 import Swal from 'sweetalert2';
-
-
-
 
 @Component({
   selector: 'app-proyectos',
@@ -26,7 +19,7 @@ export class ProyectosComponent implements OnInit {
   dataUsuario: Usuario [] = [];
   itemsProyecto: ItemsProyecto[] = [];
 
-  newItems: string[] = [];
+  newItems: { descripcion: string; fecha_limite: string }[] = [];
   progreso: number = 0;
 
   modoEdicion: boolean = false;
@@ -46,8 +39,8 @@ export class ProyectosComponent implements OnInit {
     this.getAllUsuario(); 
   }
 
-  trackByIndex(index: number, item: string): number {
-    return index;
+  trackByIndex(index: number, item: { descripcion: string; fecha_limite: string }): number {
+  return index;
   }
   
   getAll() {
@@ -86,7 +79,13 @@ export class ProyectosComponent implements OnInit {
     } else {
       nuevoEstado = item.estado; // o puedes retornar si ya está completado
     }
-  
+
+    if (!item.id_proyecto || !item.id_items) {
+      console.error('El ítem no tiene un ID de proyecto o de ítem válido:', item);
+      Swal.fire('Error', 'El ítem no tiene un ID válido.', 'error');
+      return;
+    }
+
     const dto: ActualizarItemDto = {
       ID_PROYECTO: item.id_proyecto,
       ID_ITEMS: item.id_items,
@@ -111,10 +110,14 @@ export class ProyectosComponent implements OnInit {
   }
 
   calcularProgreso(): void {
-    const total = this.itemsProyecto.length;
-    const completados = this.itemsProyecto.filter(item => item.estado === 'Completado').length;
-    console.log(`Total: ${total}, Completados: ${completados}`); // ✅ DEBUG
-    this.progreso = total > 0 ? Math.round((completados / total) * 100) : 0;
+  if (!this.itemsProyecto || this.itemsProyecto.length === 0) {
+    this.progreso = 0;
+    return;
+  }
+
+  const total = this.itemsProyecto.length;
+  const completados = this.itemsProyecto.filter(item => item.estado?.trim() === 'Completado').length;
+  this.progreso = total > 0 ? Math.round((completados / total) * 100) : 0;
   }
   
   
@@ -176,32 +179,42 @@ export class ProyectosComponent implements OnInit {
   }
 
   updateProgress() {
-    const total = this.newItems.length;
-    this.progreso = Math.min((total / 3) * 100, 100);
+  const total = this.newItems.filter(item => item.descripcion.trim() !== '').length;
+  this.progreso = Math.min((total / 3) * 100, 100);
   }
 
-  addItem() {
-    this.newItems.push(''); // agrega un ítem vacío
-    this.updateProgress();
+ addItem() {
+  if (this.newItems.length >= 10) { // Ejemplo: máximo 10 ítems
+    Swal.fire('Advertencia', 'No puedes agregar más de 10 ítems.', 'warning');
+    return;
   }
+  this.newItems.push({ descripcion: '', fecha_limite: '' });
+  this.updateProgress();
+}
 
-  removeItem(index: number) {
-    this.newItems.splice(index, 1);
+removeItem(index: number) {
+  if (this.newItems.length <= 3) { // Ejemplo: mínimo 3 ítems
+    Swal.fire('Advertencia', 'Debe haber al menos 3 ítems.', 'warning');
+    return;
   }
+  this.newItems.splice(index, 1);
+  this.updateProgress();
+}
 
   resetForm() {
     this.newProyecto = new Proyecto();
     this.newProyecto.id_proyecto = 0;
-    this.newItems = [''];
+    this.newItems = [{ descripcion: '', fecha_limite: '' }];
   }
 
-  formatDate(date: Date): string {
-    const d = new Date(date);
-    const month = '' + (d.getMonth() + 1).toString().padStart(2, '0');
-    const day = '' + d.getDate().toString().padStart(2, '0');
-    const year = d.getFullYear();
-  
-    return [year, month, day].join('-');
+  formatDate(date: Date | null): string {
+  if (!date) return '';
+  const d = new Date(date);
+  const month = '' + (d.getMonth() + 1).toString().padStart(2, '0');
+  const day = '' + d.getDate().toString().padStart(2, '0');
+  const year = d.getFullYear();
+
+  return [year, month, day].join('-');
   }
 
   async saveProyecto() {
@@ -213,28 +226,29 @@ export class ProyectosComponent implements OnInit {
       const proyectoGuardado: any = await this.servicioProyecto.saveProyecto(this.newProyecto).toPromise();
       const idProyecto = proyectoGuardado.id_proyecto;
   
-      const itemsValidos = this.newItems
-        .map(desc => desc.trim())
-        .filter(desc => desc !== '');
-  
+      const itemsValidos = this.newItems.filter(item => 
+        item.descripcion.trim() !== '' && item.fecha_limite.trim() !== ''
+      );
+
       if (itemsValidos.length < 3) {
         Swal.fire({
-          icon: "warning",
-          title: "Debe ingresar al menos 3 ítems válidos",
+          icon: 'warning',
+          title: 'Debe ingresar al menos 3 ítems válidos con descripción y fecha límite.',
           showConfirmButton: true
         });
         return;
       }
   
-      for (let descripcion of itemsValidos) {
+      for (let itemData of itemsValidos) { 
         const item: ItemsProyecto = {
           ID_ITEMS: 0,
-          descripcion,
+          descripcion: itemData.descripcion, 
           ID_PROYECTO: idProyecto,
           fecha_creacion: this.formatDate(new Date()),
+          fecha_limite: itemData.fecha_limite,
           estado: "No Iniciado"
         };
-  
+
         await this.servicioItems.saveItemsProyecto(item).toPromise();
       }
   
@@ -262,8 +276,7 @@ export class ProyectosComponent implements OnInit {
 
   async updateProyecto() {
     const itemsValidos = this.newItems
-      .map(desc => desc.trim())
-      .filter(desc => desc !== '');
+      .filter(item => item.descripcion.trim() !== '');
   
     if (itemsValidos.length < 3) {
       Swal.fire({
@@ -287,12 +300,13 @@ export class ProyectosComponent implements OnInit {
       await this.servicioItems.deleteItemsByProyecto(idProyecto).toPromise();  // Asegúrate de tener el método `deleteItemsByProyecto`
   
       // Guardar los nuevos ítems
-      for (let descripcion of itemsValidos) {
+      for (let itemData of itemsValidos) {
         const item: ItemsProyecto = {
           ID_ITEMS: 0,
-          descripcion,
+          descripcion: itemData.descripcion,
           ID_PROYECTO: idProyecto,
           fecha_creacion: this.formatDate(new Date()),
+          fecha_limite: itemData.fecha_limite,
           estado: "No Iniciado"
         };
         await this.servicioItems.saveItemsProyecto(item).toPromise();
