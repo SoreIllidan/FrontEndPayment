@@ -67,7 +67,6 @@ export class ProyectosComponent implements OnInit {
     }
   }
   
-
   updateItem(item: any) {
     console.log('ITEM =>', item);
     let nuevoEstado: string;
@@ -84,7 +83,7 @@ export class ProyectosComponent implements OnInit {
       console.error('El ítem no tiene un ID de proyecto o de ítem válido:', item);
       Swal.fire('Error', 'El ítem no tiene un ID válido.', 'error');
       return;
-    }
+    };
 
     const dto: ActualizarItemDto = {
       ID_PROYECTO: item.id_proyecto,
@@ -105,6 +104,37 @@ export class ProyectosComponent implements OnInit {
       },
       error: err => {
         Swal.fire('Error', 'No se pudo actualizar el ítem.', 'error');
+      }
+    });
+  }
+
+  puedeActivarItem(i: number): boolean {
+  // El primer ítem siempre se puede activar
+  if (i === 0) return true;
+  // Solo se puede activar si el anterior está completado
+  return this.itemsProyecto[i - 1]?.estado === 'Iniciado' || this.itemsProyecto[i - 1]?.estado === 'Completado';  
+  }
+  
+  reiniciarEstado(item: any) {
+    if (!item.id_proyecto || !item.id_items) {
+      Swal.fire('Error', 'El ítem no tiene un ID válido.', 'error');
+      return;
+    }
+
+    const dto: ActualizarItemDto = {
+      ID_PROYECTO: item.id_proyecto,
+      ID_ITEMS: item.id_items,
+      NuevoEstado: 'No Iniciado'
+    };
+
+    this.servicioItems.updateEstadoItem(dto).subscribe({
+      next: res => {
+        this.getItemsPorProyecto(this.newProyecto, () => {
+          this.calcularProgresoYActualizarProyecto();
+        });
+      },
+      error: err => {
+        Swal.fire('Error', 'No se pudo reiniciar el estado del ítem.', 'error');
       }
     });
   }

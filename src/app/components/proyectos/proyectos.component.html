@@ -256,7 +256,6 @@
             <li *ngFor="let item of itemsProyecto; let i = index" class="list-group-item">
               <div class="d-flex justify-content-between align-items-start flex-column flex-md-row w-100">
                 <div class="flex-grow-1 me-2">
-                  <!-- Aquí está el input en lugar del <h3> -->
                   <input type="text"
                          class="form-control mb-1"
                          [(ngModel)]="item.descripcion"
@@ -267,26 +266,26 @@
                 </div>
         
                 <!-- Botones de acción -->
-                <div class="mt-2 mt-md-0">
+                <div class="mt-2 mt-md-0 d-flex gap-2">
                   <button 
                     class="btn btn-sm me-2"
                     [ngClass]="getEstadoButtonClass(item.estado)"
-                    (click)="updateItem(item)">
-                    {{ item.estado }}
+                    (click)="updateItem(item)"
+                    [disabled]="!puedeActivarItem(i) && item.estado === 'No Iniciado'">
+                      {{ item.estado }}
+                  </button>
+
+                  <button class="btn btn-sm btn-secondary" title="Reiniciar estado" (click)="reiniciarEstado(item)">
+                    <i class="bi bi-arrow-counterclockwise"></i>
                   </button>
 
                   <button class="btn btn-sm btn-danger" title="Eliminar" (click)="removeItem(i)">
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-          
-        
-        
-      </div>
+          </div>
+        </li>
+      </ul>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
