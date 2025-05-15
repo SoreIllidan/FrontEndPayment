@@ -1,104 +1,118 @@
+<!-- Notifications Page -->
+<div class="page-content" id="notifications-page">
 
-    <!-- Notifications Page -->
-    <div class="page-content" id="notifications-page">
-        <div class="content-header">
-          <h1 class="page-title">Notificaciones</h1>
-          <button class="btn btn-outline-secondary">
-            <i class='bx bx-check-double'></i> Marcar todo como leído
-          </button>
+    <div class="content-header" style="display: flex; align-items: center; gap: 10px;" >
+      <h1 class="page-title" style="margin-right: auto;">Notificaciones</h1>
+      <button class="btn btn-outline-secondary marcar-leido" >
+              Añadir Nueva notificacion
+      </button>
+      <button class="btn btn-outline-secondary marcar-leido">
+        <i class='bx bx-check-double'></i> Marcar todo como leído
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="notification-date">Hoy</div>
+      <div class="notification-item">
+        <div class="notification-icon">
+          <i class='bx bx-task'></i>
         </div>
-        
-        <div class="card">
-          <div class="notification-item">
-            <div class="notification-icon">
-              <i class='bx bx-task'></i>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">Nueva tarea asignada</div>
-              <div class="text-muted small">Se te ha asignado la tarea "Diseño de interfaz"</div>
-              <div class="notification-time">Hace 10 minutos</div>
-            </div>
-            <div>
-              <button class="btn btn-sm btn-light rounded-circle">
-                <i class='bx bx-x'></i>
-              </button>
-            </div>
-          </div>
-          <div class="notification-item">
-            <div class="notification-icon teal">
-              <i class='bx bx-calendar'></i>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">Recordatorio de evento</div>
-              <div class="text-muted small">Reunión de equipo en 30 minutos</div>
-              <div class="notification-time">Hace 25 minutos</div>
-            </div>
-            <div>
-              <button class="btn btn-sm btn-light rounded-circle">
-                <i class='bx bx-x'></i>
-              </button>
-            </div>
-          </div>
-          <div class="notification-item">
-            <div class="notification-icon">
-              <i class='bx bx-message-dots'></i>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">Nuevo comentario</div>
-              <div class="text-muted small">Carlos comentó en el proyecto "Rediseño"</div>
-              <div class="notification-time">Hace 1 hora</div>
-            </div>
-            <div>
-              <button class="btn btn-sm btn-light rounded-circle">
-                <i class='bx bx-x'></i>
-              </button>
-            </div>
-          </div>
-          <div class="notification-item">
-            <div class="notification-icon teal">
-              <i class='bx bx-user-plus'></i>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">Nuevo miembro en el equipo</div>
-              <div class="text-muted small">Laura Torres se ha unido al proyecto "App móvil"</div>
-              <div class="notification-time">Hace 3 horas</div>
-            </div>
-            <div>
-              <button class="btn btn-sm btn-light rounded-circle">
-                <i class='bx bx-x'></i>
-              </button>
-            </div>
-          </div>
-          <div class="notification-item">
-            <div class="notification-icon">
-              <i class='bx bx-error-circle'></i>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">Tarea vencida</div>
-              <div class="text-muted small">La tarea "Documentación técnica" ha vencido</div>
-              <div class="notification-time">Hace 5 horas</div>
-            </div>
-            <div>
-              <button class="btn btn-sm btn-light rounded-circle">
-                <i class='bx bx-x'></i>
-              </button>
-            </div>
-          </div>
-          <div class="notification-item">
-            <div class="notification-icon teal">
-              <i class='bx bx-check-circle'></i>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">Tarea completada</div>
-              <div class="text-muted small">Miguel ha completado la tarea "Desarrollo API"</div>
-              <div class="notification-time">Hace 1 día</div>
-            </div>
-            <div>
-              <button class="btn btn-sm btn-light rounded-circle">
-                <i class='bx bx-x'></i>
-              </button>
-            </div>
-          </div>
+        <div class="flex-grow-1">
+          <div class="fw-semibold">Nueva tarea asignada</div>
+          <div class="text-muted small">Se te ha asignado la tarea "Diseño de interfaz"</div>
+          <div class="notification-time">Hace 10 minutos</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-light rounded-circle">
+            <i class='bx bx-x'></i>
+          </button>
         </div>
       </div>
 
+      
+      
+      <div class="notification-item">
+        <div class="notification-icon teal">
+          <i class='bx bx-calendar'></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="fw-semibold">Recordatorio de evento</div>
+          <div class="text-muted small">Reunión de equipo en 30 minutos</div>
+          <div class="notification-time">Hace 25 minutos</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-light rounded-circle">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon">
+          <i class='bx bx-message-dots'></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="fw-semibold">Nuevo comentario</div>
+          <div class="text-muted small">Carlos comentó en el proyecto "Rediseño"</div>
+          <div class="notification-time">Hace 1 hora</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-light rounded-circle">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="separator"></div>
+      <div class="notification-date ayer">Ayer</div>
+
+
+      <div class="notification-item">
+        <div class="notification-icon teal">
+          <i class='bx bx-user-plus'></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="fw-semibold">Nuevo miembro en el equipo</div>
+          <div class="text-muted small">Laura Torres se ha unido al proyecto "App móvil"</div>
+          <div class="notification-time">Hace 3 horas</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-light rounded-circle">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon">
+          <i class='bx bx-error-circle'></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="fw-semibold">Tarea vencida</div>
+          <div class="text-muted small">La tarea "Documentación técnica" ha vencido</div>
+          <div class="notification-time">Hace 5 horas</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-light rounded-circle">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon teal">
+          <i class='bx bx-check-circle'></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="fw-semibold">Tarea completada</div>
+          <div class="text-muted small">Miguel ha completado la tarea "Desarrollo API"</div>
+          <div class="notification-time">Hace 1 día</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-light rounded-circle">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
