@@ -40,9 +40,9 @@
             <span>{{ data.progreso }}%</span>
           </div>
           <!-- Barra de progreso general del proyecto -->
-          <div class="progress mb-2 " style="height: 8px;">
+          <div class="progress">
             <div 
-              class="progress-bar custom-progress" 
+              class="progress-bar" 
               role="progressbar"
               [style.width.%]="data.progreso || 0"
               [attr.aria-valuenow]="data.progreso"
@@ -251,42 +251,47 @@
 
         <hr>
 
-        <div class="mb-3">
-          <label class="form-label">Ítems del Proyecto</label>
-          <ul class="list-group">
-            <li *ngFor="let item of itemsProyecto; let i = index" class="list-group-item">
-              <div class="d-flex justify-content-between align-items-start flex-column flex-md-row w-100">
-                <div class="flex-grow-1 me-2">
-                  <input type="text"
-                         class="form-control mb-1"
-                         [(ngModel)]="item.descripcion"
-                         [name]="'descripcion_' + i"
-                         placeholder="Descripción del ítem" [disabled]="!modoEdicion"/>
-        
-                  <!-- <small class="text-muted">Fecha: {{ item.fecha_creacion | date: 'shortDate' }}</small> -->
-                </div>
-        
-                <!-- Botones de acción -->
-                <div class="mt-2 mt-md-0 d-flex gap-2">
-                  <button 
-                    class="btn btn-sm me-2"
+        <!-- Ítems del Proyecto en el modal de modificar -->
+      <div class="mb-3">
+        <label class="form-label">Ítems del Proyecto</label>
+        <div *ngFor="let item of itemsProyecto; let i = index" class="row align-items-center mb-2">
+          <!-- Descripción del ítem -->
+          <div class="col-md-4 mb-1 mb-md-0">
+            <input type="text"
+                  class="form-control"
+                  [(ngModel)]="item.descripcion"
+                  [name]="'descripcion_' + i"
+                  placeholder="Descripción del ítem"
+                  [disabled]="!modoEdicion"/>
+          </div>
+          <!-- Fecha de creación del ítem (solo visualización) -->
+          <div class="col-md-4 mb-1 mb-md-0">
+            <input type="date"
+                  class="form-control"
+                  [value]="item.fecha_creacion | date:'yyyy-MM-dd'"
+                  disabled
+                  readonly
+                  [name]="'fechaCreacion_' + i"/>
+          </div>
+          
+          <!-- Botones de acción -->
+          <div class="col-md-2 d-flex gap-1">
+            <button class="btn btn-sm"
                     [ngClass]="getEstadoButtonClass(item.estado)"
                     (click)="updateItem(item)"
                     [disabled]="!puedeActivarItem(i) && item.estado === 'No Iniciado'">
-                      {{ item.estado }}
-                  </button>
-
-                  <button class="btn btn-sm btn-secondary" title="Reiniciar estado" (click)="reiniciarEstado(item)">
-                    <i class="bi bi-arrow-counterclockwise"></i>
-                  </button>
-
-                  <button class="btn btn-sm btn-danger" title="Eliminar" (click)="removeItem(i)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
+              {{ item.estado }}
+            </button>
+            <button class="btn btn-sm btn-secondary" title="Reiniciar estado" (click)="reiniciarEstado(item)">
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" title="Eliminar" (click)="removeItem(i)">
+              <i class="bi bi-trash"></i>
+            </button>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
+
 
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
