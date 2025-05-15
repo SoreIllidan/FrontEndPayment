@@ -206,8 +206,8 @@
   }
   
   .btn-primary:hover {
-    background-color: #6a5acd;
-    border-color: #6a5acd;
+    background-color: #8551c9;
+    border-color: #8551c9;
   }
   
   .btn-secondary {
@@ -217,8 +217,8 @@
   }
   
   .btn-secondary:hover {
-    background-color: #3bc1b0;
-    border-color: #3bc1b0;
+    background-color: #07a8ad;
+    border-color: #07a8ad;
     color: #fff;
   }
   
@@ -416,7 +416,7 @@
   }
 
   .btn-turquoise {
-    background-color: #a965ff; /* Color turquesa */
+    background-color: #a765fe; /* Color turquesa */
     color: white; /* Color del texto */
   }
 
@@ -425,7 +425,7 @@
     border: 1px solid #ccc; /* Opcional: agregar un borde */
 }
 .custom-progress {
-  background-color: #a965ff; /* Color personalizado para la barra de progreso */
+  background-color: #a765fe; /* Color personalizado para la barra de progreso */
 }
 
 .modal-title {
@@ -439,3 +439,21 @@
   font-size: 1.0rem;
   font-weight: bold;
 }
+
+.progress-bar {
+  border-radius: 5px;
+  transition: width 0.6s ease;
+}
+.progress {
+  border-radius: 5px;
+}
+
+.progress-bar {
+  background-color: #a765fe; /* O el color que uses en el modal */
+  transition: width 0.6s ease;
+  border-radius: 5px;
+}
+.progress {
+  border-radius: 5px;
+}
+

@@ -99,6 +99,7 @@ export class ProyectosComponent implements OnInit {
         
         this.getItemsPorProyecto(this.newProyecto, () => {
           this.calcularProgresoYActualizarProyecto(); // <-- solo después de recargar los ítems
+          this.getAll(); 
         });
 
       },
@@ -131,6 +132,7 @@ export class ProyectosComponent implements OnInit {
       next: res => {
         this.getItemsPorProyecto(this.newProyecto, () => {
           this.calcularProgresoYActualizarProyecto();
+          this.getAll(); 
         });
       },
       error: err => {
@@ -167,12 +169,12 @@ export class ProyectosComponent implements OnInit {
     }
   }
   
-
   getItemsPorProyecto(proyecto: any, callback?: () => void): void {
     this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe((items) => {
       this.itemsProyecto = items;
+      this.calcularProgreso();
+      this.calcularProgresoYActualizarProyecto(); 
       console.log('Ítems cargados:', this.itemsProyecto); 
-      this.calcularProgresoYActualizarProyecto(); // ✅ actualiza en BD también
       if (callback) callback();
     });
   }
@@ -278,9 +280,14 @@ removeItem(index: number) {
           fecha_limite: itemData.fecha_limite,
           estado: "No Iniciado"
         };
-
         await this.servicioItems.saveItemsProyecto(item).toPromise();
+
       }
+
+      this.getItemsPorProyecto(this.newProyecto, () => {
+        this.calcularProgresoYActualizarProyecto();
+        this.getAll(); 
+      });
   
       Swal.fire({
         position: "center",
@@ -330,10 +337,10 @@ removeItem(index: number) {
       await this.servicioItems.deleteItemsByProyecto(idProyecto).toPromise();  // Asegúrate de tener el método `deleteItemsByProyecto`
   
       // Guardar los nuevos ítems
-      for (let itemData of itemsValidos) {
+      for (let itemData of itemsValidos) { 
         const item: ItemsProyecto = {
           ID_ITEMS: 0,
-          descripcion: itemData.descripcion,
+          descripcion: itemData.descripcion, 
           ID_PROYECTO: idProyecto,
           fecha_creacion: this.formatDate(new Date()),
           fecha_limite: itemData.fecha_limite,
@@ -341,6 +348,10 @@ removeItem(index: number) {
         };
         await this.servicioItems.saveItemsProyecto(item).toPromise();
       }
+      this.getItemsPorProyecto(this.newProyecto, () => {
+        this.calcularProgresoYActualizarProyecto();
+        this.getAll(); 
+      });
   
       Swal.fire({
         position: "center",

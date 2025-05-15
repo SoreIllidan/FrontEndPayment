@@ -17,50 +17,51 @@
 </div>
 
 <div class="row">
-     <!-- Iterar sobre la lista de proyectos -->
-      <div class="col-md-4" *ngFor="let data of proyecto">
-        <div class="card project-card custom-card">
-          <div class="card-body ">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <!-- Título del proyecto -->
-              <h5 class="card-title">{{ data.titulo }}</h5>
-              <!-- Estado del proyecto -->
-              <span class="badge" [ngClass]="getEstadoColor(data.estado)">
-                {{ data.estado }}
-              </span>
-            </div>
-           <!-- Descripción del proyecto -->
-            <p class="card-text text-muted">
-              {{ data.descripcion.length > 90 ? (data.descripcion | slice:0:90) + '...' : data.descripcion }}
-            </p>
+  <!-- Iterar sobre la lista de proyectos -->
+  <div class="col-md-4" *ngFor="let data of proyecto">
+    <div class="card project-card custom-card">
+      <div class="card-body ">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <!-- Título del proyecto -->
+          <h5 class="card-title">{{ data.titulo }}</h5>
+          <!-- Estado del proyecto -->
+          <span class="badge" [ngClass]="getEstadoColor(data.estado)">
+            {{ data.estado }}
+          </span>
+        </div>
+        <!-- Descripción del proyecto -->
+        <p class="card-text text-muted">
+          {{ data.descripcion.length > 90 ? (data.descripcion | slice:0:90) + '...' : data.descripcion }}
+        </p>
 
-            <div class="mb-3">
-              <div class="d-flex justify-content-between mb-1">
-                <span>Progreso</span>
-                <span>{{ data.progreso }}%</span>
-              </div>
-              <div class="progress">
-                <div class="progress-bar"
-                     role="progressbar"
-                     [style.width]="data.progreso + '%'"
-                     [attr.aria-valuenow]="progreso"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-            
-
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <small class="text-muted">Fecha límite: {{ data.fecha_limite | date: 'dd/MM/yyyy' }}</small>
-              </div>
-              <button class="btn btn-sm btn-outline-primary" (click)="poblarModal(data)" data-bs-toggle="modal" 
-              data-bs-target="#updateProyectoModal">Detalles</button>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1">
+            <span>Progreso</span>
+            <span>{{ data.progreso }}%</span>
+          </div>
+          <!-- Barra de progreso general del proyecto -->
+          <div class="progress mb-2 " style="height: 8px;">
+            <div 
+              class="progress-bar custom-progress" 
+              role="progressbar"
+              [style.width.%]="data.progreso || 0"
+              [attr.aria-valuenow]="data.progreso"
+              aria-valuemin="0"
+              aria-valuemax="100">
             </div>
           </div>
         </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <small class="text-muted">Fecha límite: {{ data.fecha_limite | date: 'dd/MM/yyyy' }}</small>
+          </div>
+          <button class="btn btn-sm btn-outline-primary" (click)="poblarModal(data)" data-bs-toggle="modal" 
+          data-bs-target="#updateProyectoModal">Detalles</button>
+        </div>
       </div>
+    </div>
+  </div>
 </div>
 
 
