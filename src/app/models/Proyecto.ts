@@ -3,7 +3,7 @@ export class Proyecto {
     id_usuario: number=0;
     titulo: string='';
     descripcion: string='';
-    fecha_limite: string='';
+    fecha_limite?: string='';
     estado: string='No Iniciado';
     progreso: number=0;
     fecha_creacion: string='';

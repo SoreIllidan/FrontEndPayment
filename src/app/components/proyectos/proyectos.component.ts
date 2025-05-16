@@ -19,7 +19,7 @@ export class ProyectosComponent implements OnInit {
   dataUsuario: Usuario [] = [];
   itemsProyecto: ItemsProyecto[] = [];
 
-  newItems: { descripcion: string; fecha_limite: string }[] = [];
+  newItems: { descripcion: string; fecha_fin: string }[] = [];
   progreso: number = 0;
 
   modoEdicion: boolean = false;
@@ -39,7 +39,7 @@ export class ProyectosComponent implements OnInit {
     this.getAllUsuario(); 
   }
 
-  trackByIndex(index: number, item: { descripcion: string; fecha_limite: string }): number {
+  trackByIndex(index: number, item: { descripcion: string; fecha_fin: string }): number {
   return index;
   }
   
@@ -199,9 +199,9 @@ export class ProyectosComponent implements OnInit {
     this.getItemsPorProyecto(proyectos);
 
     if (this.newProyecto.fecha_creacion) {
-      this.newProyecto.fecha_creacion = this.newProyecto.fecha_creacion.split('T')[0];
-      this.newProyecto.fecha_limite = this.newProyecto.fecha_limite.split('T')[0];
-      this.newProyecto.fecha_actualizacion = this.newProyecto.fecha_actualizacion.split('T')[0];
+    this.newProyecto.fecha_creacion = this.newProyecto.fecha_creacion.split('T')[0];
+    this.newProyecto.fecha_limite = this.newProyecto.fecha_limite?.split('T')[0]
+    this.newProyecto.fecha_actualizacion = this.newProyecto.fecha_actualizacion.split('T')[0];
     }
 
   }
@@ -220,7 +220,7 @@ export class ProyectosComponent implements OnInit {
     Swal.fire('Advertencia', 'No puedes agregar más de 10 ítems.', 'warning');
     return;
   }
-  this.newItems.push({ descripcion: '', fecha_limite: '' });
+  this.newItems.push({ descripcion: '', fecha_fin: '' });
   this.updateProgress();
 }
 
@@ -236,7 +236,7 @@ removeItem(index: number) {
   resetForm() {
     this.newProyecto = new Proyecto();
     this.newProyecto.id_proyecto = 0;
-    this.newItems = [{ descripcion: '', fecha_limite: '' }];
+    this.newItems = [{ descripcion: '', fecha_fin: '' }];
   }
 
   formatDate(date: Date | null): string {
@@ -259,7 +259,7 @@ removeItem(index: number) {
       const idProyecto = proyectoGuardado.id_proyecto;
   
       const itemsValidos = this.newItems.filter(item => 
-        item.descripcion.trim() !== '' && item.fecha_limite.trim() !== ''
+        item.descripcion.trim() !== '' && item.fecha_fin.trim() !== ''
       );
 
       if (itemsValidos.length < 3) {
@@ -277,7 +277,7 @@ removeItem(index: number) {
           descripcion: itemData.descripcion, 
           ID_PROYECTO: idProyecto,
           fecha_creacion: this.formatDate(new Date()),
-          fecha_limite: itemData.fecha_limite,
+          fecha_fin: itemData.fecha_fin,
           estado: "No Iniciado"
         };
         await this.servicioItems.saveItemsProyecto(item).toPromise();
@@ -343,7 +343,7 @@ removeItem(index: number) {
           descripcion: itemData.descripcion, 
           ID_PROYECTO: idProyecto,
           fecha_creacion: this.formatDate(new Date()),
-          fecha_limite: itemData.fecha_limite,
+          fecha_fin: itemData.fecha_fin,
           estado: "No Iniciado"
         };
         await this.servicioItems.saveItemsProyecto(item).toPromise();
@@ -374,10 +374,8 @@ removeItem(index: number) {
     }
   }
   
-
   getEstadoColor(estado: string): string {
 
-  
     switch (estado) {
       case 'No Iniciado':
         return 'bg-secondary text-white';  // Gris
@@ -393,7 +391,6 @@ removeItem(index: number) {
         return 'bg-light text-dark';       // Por defecto, gris claro
     }
   }
-
 
     saveItemsProyecto() {
       this.newItemsProyecto.fecha_creacion = this.formatDate(new Date());
@@ -435,7 +432,5 @@ removeItem(index: number) {
         }
       });
     }
-
-    
 }
 

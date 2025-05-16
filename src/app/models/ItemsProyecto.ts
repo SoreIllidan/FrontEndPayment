@@ -4,5 +4,5 @@ export class ItemsProyecto {
     descripcion: string = '';
     estado: string = '';
     fecha_creacion: string = ''; 
-    fecha_limite?: string;
+    fecha_fin?: string;
 }
