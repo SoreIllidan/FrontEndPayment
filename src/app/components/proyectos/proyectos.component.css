@@ -457,3 +457,15 @@
   border-radius: 5px;
 }
 
+.btn-estado {
+  min-width: 120px;
+  max-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.progress-bar {
+  transition: width 1s ease;
+}

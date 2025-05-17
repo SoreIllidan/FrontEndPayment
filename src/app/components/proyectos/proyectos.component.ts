@@ -76,7 +76,7 @@ export class ProyectosComponent implements OnInit {
     } else if (item.estado === 'Iniciado') {
       nuevoEstado = 'Completado';
     } else {
-      nuevoEstado = item.estado; // o puedes retornar si ya está completado
+      nuevoEstado = item.estado; 
     }
 
     if (!item.id_proyecto || !item.id_items) {
@@ -95,10 +95,9 @@ export class ProyectosComponent implements OnInit {
   
     this.servicioItems.updateEstadoItem(dto).subscribe({  
       next: res => {
-        // Swal.fire('¡Actualizado!', `Estado cambiado a "${nuevoEstado}".`, 'success');
         
         this.getItemsPorProyecto(this.newProyecto, () => {
-          this.calcularProgresoYActualizarProyecto(); // <-- solo después de recargar los ítems
+          this.calcularProgresoYActualizarProyecto(); 
           this.getAll(); 
         });
 
@@ -169,9 +168,20 @@ export class ProyectosComponent implements OnInit {
     }
   }
   
+  private formatDateForInput(fecha: string | Date | undefined): string {
+  if (!fecha) return '';
+  const d = new Date(fecha);
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+  }
+
   getItemsPorProyecto(proyecto: any, callback?: () => void): void {
     this.servicioItems.getItemsPorProyecto(proyecto.id_proyecto).subscribe((items) => {
-      this.itemsProyecto = items;
+      // Formatea la fecha de cada ítem
+      this.itemsProyecto = items.map(item => ({
+        ...item,
+        fecha_fin: this.formatDateForInput(item.fecha_fin),
+      }));
       this.calcularProgreso();
       this.calcularProgresoYActualizarProyecto(); 
       console.log('Ítems cargados:', this.itemsProyecto); 
@@ -179,8 +189,6 @@ export class ProyectosComponent implements OnInit {
     });
   }
   
-  
-
     activarEdicionProgreso() {
       this.modoEdicion = true;
       this.mostrarBotonModificar = true;
@@ -283,6 +291,9 @@ removeItem(index: number) {
         await this.servicioItems.saveItemsProyecto(item).toPromise();
 
       }
+
+
+      
 
       this.getItemsPorProyecto(this.newProyecto, () => {
         this.calcularProgresoYActualizarProyecto();
@@ -395,7 +406,6 @@ removeItem(index: number) {
     saveItemsProyecto() {
       this.newItemsProyecto.fecha_creacion = this.formatDate(new Date());
       this.newItemsProyecto.estado ="No Iniciado";
-   
       console.log("nuevo itemsproyecto: ",this.newItemsProyecto);
       this.servicioItems.saveItemsProyecto(this.newItemsProyecto).subscribe({
         next: (response) => {

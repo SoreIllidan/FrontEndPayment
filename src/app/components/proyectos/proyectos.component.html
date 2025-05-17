@@ -45,7 +45,7 @@
               class="progress-bar" 
               role="progressbar"
               [style.width.%]="data.progreso || 0"
-              [attr.aria-valuenow]="data.progreso"
+              [attr.aria-valuenow]="data.progreso +'%'"
               aria-valuemin="0"
               aria-valuemax="100">
             </div>
@@ -189,11 +189,11 @@
           </div>
           <div class="progress">
             <div class="progress-bar"
-                 role="progressbar"
-                 [style.width]="newProyecto.progreso + '%'"
-                 [attr.aria-valuenow]="newProyecto.progreso"
-                 aria-valuemin="0"
-                 aria-valuemax="100">
+                role="progressbar"
+                [style.width]="newProyecto.progreso + '%'"
+                [attr.aria-valuenow]="newProyecto.progreso"
+                aria-valuemin="0"
+                aria-valuemax="100">
             </div>
           </div>
         </div>
@@ -268,15 +268,16 @@
           <div class="col-md-4 mb-1 mb-md-0">
             <input type="date"
                   class="form-control"
-                  [value]="item.fecha_creacion | date:'yyyy-MM-dd'"
+                  [(ngModel)]="item.fecha_fin"
+                  [name]="'fechafin_' + i"
                   disabled
-                  readonly
-                  [name]="'fechaCreacion_' + i"/>
+                  readonly/>
+                  
           </div>
           
           <!-- Botones de acción -->
           <div class="col-md-2 d-flex gap-1">
-            <button class="btn btn-sm"
+            <button class="btn btn-sm btn-estado"
                     [ngClass]="getEstadoButtonClass(item.estado)"
                     (click)="updateItem(item)"
                     [disabled]="!puedeActivarItem(i) && item.estado === 'No Iniciado'">
