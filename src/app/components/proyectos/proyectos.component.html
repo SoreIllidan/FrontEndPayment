@@ -25,8 +25,9 @@
           <!-- Título del proyecto -->
           <h5 class="card-title">{{ data.titulo }}</h5>
           <!-- Estado del proyecto -->
-          <span class="badge" [ngClass]="getEstadoColor(data.estado)">
-            {{ data.estado }}
+          <span class="badge estado-badge" 
+                [ngClass]="getEstadoColor(getEstadoVisualProyecto(data))">
+            {{ getEstadoVisualProyecto(data) }}
           </span>
         </div>
         <!-- Descripción del proyecto -->

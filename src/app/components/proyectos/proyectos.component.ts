@@ -44,10 +44,20 @@ export class ProyectosComponent implements OnInit {
   }
   
   getAll() {
-    this.servicioProyecto.getAll().subscribe(x => { this.proyecto = x;
-      // console.log("Lista de Proyectos", this.proyecto);  // Muestra los proyectos en la consola
+  this.servicioProyecto.getAll().subscribe(proyectos => {
+    this.proyecto = proyectos;
+    // Por cada proyecto, carga sus ítems y asígnalos a la propiedad 'items'
+    this.proyecto.forEach((proy, idx) => {
+      this.servicioItems.getItemsPorProyecto(proy.id_proyecto).subscribe(items => {
+        // Formatea la fecha de cada ítem si es necesario
+        proy.items = items.map(item => ({
+          ...item,
+          fecha_fin: this.formatDateForInput(item.fecha_fin),
+        }));
+      });
     });
-  }
+  });
+}
 
   calcularProgresoYActualizarProyecto(): void {
     const total = this.itemsProyecto.length;
@@ -107,6 +117,20 @@ export class ProyectosComponent implements OnInit {
       }
     });
   }
+
+  getEstadoVisualProyecto(proyecto: any): string {
+  if (proyecto.items && proyecto.items.length > 0) {
+    // Si todos los ítems están completados
+    if (proyecto.items.every((item: any) => item.estado === 'Completado')) {
+      return 'Completado';
+    }
+    // Si al menos uno está iniciado o completado
+    if (proyecto.items.some((item: any) => item.estado === 'Iniciado' || item.estado === 'Completado')) {
+      return 'Iniciado';
+    }
+  }
+  return proyecto.estado;
+}
 
   puedeActivarItem(i: number): boolean {
   // El primer ítem siempre se puede activar
@@ -386,20 +410,17 @@ removeItem(index: number) {
   }
   
   getEstadoColor(estado: string): string {
-
     switch (estado) {
-      case 'No Iniciado':
-        return 'bg-secondary text-white';  // Gris
       case 'Iniciado':
-        return 'bg-info text-white';       // Celeste
+        return 'bg-info text-white'; // celeste
       case 'En Progreso':
-        return 'bg-primary text-white';    // Azul
+        return 'bg-primary text-white';
       case 'Completado':
-        return 'bg-success text-white';    // Verde
+        return 'bg-success text-white';
       case 'Cancelado':
-        return 'bg-danger text-white';     // Rojo
+        return 'bg-danger text-white';
       default:
-        return 'bg-light text-dark';       // Por defecto, gris claro
+        return 'bg-light text-dark';
     }
   }
 

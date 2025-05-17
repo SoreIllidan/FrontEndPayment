@@ -1,3 +1,5 @@
+import { ItemsProyecto } from './ItemsProyecto';
+
 export class Proyecto {
     id_proyecto: number=0;
     id_usuario: number=0;
@@ -8,5 +10,6 @@ export class Proyecto {
     progreso: number=0;
     fecha_creacion: string='';
     fecha_actualizacion: string='';
+    items?: ItemsProyecto[];
   }
   
